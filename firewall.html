@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6cff">
+
+  <title>Configure Windows Firewall for Grafana — Ports, Scope & Security</title>
+  <meta name="description" content="Configure Windows Firewall for Grafana on Windows 10/11 and Windows Server 2016+. Add inbound rules for port 3000 or custom ports, restrict scope, verify connectivity, and apply best practices.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://grafana-desktop.github.io/firewall.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Configure Windows Firewall for Grafana">
+  <meta property="og:description" content="Add rules for Grafana ports, restrict scope, and verify connectivity on Windows.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/firewall.html">
+  <meta property="og:site_name" content="Grafana Desktop">
+  <meta property="og:image" content="/assets/og-grafana-windows.png">
+  <meta property="article:modified_time" content="2026-04-30T16:40:00Z">
+  <meta property="og:updated_time" content="2026-04-30T16:40:00Z">
+
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- JSON-LD: WebPage + Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Configure Windows Firewall for Grafana",
+    "url": "https://grafana-desktop.github.io/firewall.html",
+    "dateModified": "2026-04-30T16:40:00Z",
+    "breadcrumb": {"@id": "https://grafana-desktop.github.io/firewall.html#breadcrumb"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "https://grafana-desktop.github.io/firewall.html#breadcrumb",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://grafana-desktop.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Windows Firewall", "item": "https://grafana-desktop.github.io/firewall.html"}
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: HowTo (PowerShell rule) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Allow Grafana through Windows Firewall (PowerShell)",
+    "totalTime": "PT3M",
+    "step": [
+      {"@type":"HowToStep","name":"Open elevated PowerShell","text":"Run PowerShell as Administrator."},
+      {"@type":"HowToStep","name":"Add inbound rule","text":"Create a rule for TCP port 3000 on Private profile using New-NetFirewallRule."},
+      {"@type":"HowToStep","name":"Verify","text":"Check connectivity with Test-NetConnection or a browser from your allowed network."}
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Do I need a firewall rule for localhost?","acceptedAnswer":{"@type":"Answer","text":"If you access Grafana only from the same machine (localhost), you typically don't need an inbound rule. Add a rule only when exposing to other machines."}},
+      {"@type":"Question","name":"Should I enable the Public profile?","acceptedAnswer":{"@type":"Answer","text":"Prefer Private/Domain profiles. Avoid Public unless you explicitly need exposure on public networks and understand the risk."}},
+      {"@type":"Question","name":"How do I restrict access to a subnet only?","acceptedAnswer":{"@type":"Answer","text":"Use PowerShell's -RemoteAddress (e.g., 192.168.1.0/24) or netsh remoteip= to limit inbound connections to a specific subnet."}},
+      {"@type":"Question","name":"What about HTTPS behind a reverse proxy?","acceptedAnswer":{"@type":"Answer","text":"If Grafana sits behind IIS/NGINX using HTTPS, open 443 on the proxy host and restrict scope. Internally, proxy to Grafana's port (e.g., 3000)."}}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{--bg:#0f1724;--bg2:#0b1220;--accent:#0ea5e9;--accent2:#7dd3fc;--text:#e6eef6;--muted:#9db0c8;--link:#22d3ee;--link-hover:#a5f3fc;--max:1100px}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,#0a1224 0%, #0a1022 100%)}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    a{color:var(--link);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+    a:hover{color:var(--link-hover)}
+    .btn{text-decoration:none!important}
+    nav a{text-decoration:none}
+
+    .site-header{position:sticky;top:0;z-index:10;background:rgba(6,12,24,0.8);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(255,255,255,0.12)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .brand{display:flex;flex-direction:column;line-height:1}
+    .brand .logo-text{font-weight:900;letter-spacing:.2px;color:#fff;font-size:18px}
+    .brand .tagline{font-size:12px;color:#cbd5e1}
+
+    nav ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+    nav a{display:inline-block;padding:9px 13px;border-radius:9px;color:#fff;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06)}
+    nav a:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.36)}
+    nav a:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+    .hero{display:grid;grid-template-columns:1fr 0.8fr;gap:24px;align-items:stretch;padding:28px 0 8px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    h1{margin:0 0 12px;font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
+
+    .section{margin-top:22px}
+    .section h2{margin:0 0 10px;font-size:20px}
+    .bullets{margin:0;padding-left:18px}
+    .small{font-size:13px;color:var(--muted)}
+
+    .cmd{display:flex;align-items:center;gap:8px;margin:8px 0;padding:10px;border-radius:8px;background:#0b1426;border:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;color:#e2e8f0}
+    .copy{margin-left:auto;padding:6px 10px;border-radius:7px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.08);color:#fff;cursor:pointer}
+    .copy:hover{background:rgba(255,255,255,0.18)}
+
+    .info{padding:14px;border-radius:10px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);color:#bbf7fe}
+    .warn{padding:14px;border-radius:10px;background:rgba(244,114,182,0.08);border:1px solid rgba(244,114,182,0.25);color:#fbcfe8}
+
+    footer{margin:34px 0 20px;color:var(--muted);text-align:center}
+
+    .last-updated{display:flex;justify-content:flex-end;color:var(--muted);font-size:12px;margin-top:6px}
+
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:#091327;padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.7);display:none;gap:12px;align-items:center;justify-content:space-between;z-index:999}
+    .cookie-actions{display:flex;gap:10px}
+
+    @media (max-width:980px){.hero{grid-template-columns:1fr}}
+    @media (max-width:640px){.header-inner{flex-direction:column;align-items:flex-start;gap:8px}.last-updated{justify-content:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <div class="container header-inner">
+      <div class="brand" aria-label="Site brand">
+        <div class="logo-text">Grafana Desktop</div>
+        <div class="tagline">Windows installers & guides — MSI, Service, Promtail</div>
+      </div>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download-msi.html">Download MSI</a></li>
+          <li><a href="/install-service.html">Install as Service</a></li>
+          <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
+          <li><a href="/firewall.html">Windows Firewall</a></li>
+          <li><a href="/promtail-windows.html">Promtail</a></li>
+          <li><a href="/common-errors.html">Common Errors</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="last-updated">Last updated: <span id="lastUpdatedText" style="margin-left:6px">2026-04-30</span></div>
+
+    <main class="hero" role="main">
+      <section class="card">
+        <h1>Configure Windows Firewall for Grafana</h1>
+        <p class="lead">Create minimal, scoped firewall rules for Grafana's HTTP/HTTPS access. Prefer Private/Domain profiles, restrict to subnets, and verify connectivity.</p>
+
+        <div class="section">
+          <h2>Do you even need an inbound rule?</h2>
+          <ul class="bullets small">
+            <li><strong>Local only (localhost):</strong> No inbound rule required.</li>
+            <li><strong>LAN access:</strong> Add an inbound rule on the listening port (default 3000), <em>Private</em> profile only.</li>
+            <li><strong>Internet exposure:</strong> Use a reverse proxy with HTTPS and strict firewall scope. Avoid Public networks when possible.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Add inbound rule (PowerShell)</h2>
+          <div class="cmd"><code>New-NetFirewallRule -DisplayName "Grafana HTTP" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3000 -Profile Private</code><button class="copy" data-cmd="New-NetFirewallRule -DisplayName 'Grafana HTTP' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3000 -Profile Private">Copy</button></div>
+          <div class="small">Restrict to a subnet (recommended):</div>
+          <div class="cmd"><code>New-NetFirewallRule -DisplayName "Grafana HTTP (LAN)" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3000 -Profile Private -RemoteAddress 192.168.1.0/24</code><button class="copy" data-cmd="New-NetFirewallRule -DisplayName 'Grafana HTTP (LAN)' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3000 -Profile Private -RemoteAddress 192.168.1.0/24">Copy</button></div>
+        </div>
+
+        <div class="section">
+          <h2>Add inbound rule (netsh)</h2>
+          <div class="cmd"><code>netsh advfirewall firewall add rule name="Grafana HTTP" dir=in action=allow protocol=TCP localport=3000 profile=private</code><button class="copy" data-cmd="netsh advfirewall firewall add rule name=&quot;Grafana HTTP&quot; dir=in action=allow protocol=TCP localport=3000 profile=private">Copy</button></div>
+          <div class="small">Restrict to a subnet:</div>
+          <div class="cmd"><code>netsh advfirewall firewall add rule name="Grafana HTTP (LAN)" dir=in action=allow protocol=TCP localport=3000 remoteip=192.168.1.0/24 profile=private</code><button class="copy" data-cmd="netsh advfirewall firewall add rule name=&quot;Grafana HTTP (LAN)&quot; dir=in action=allow protocol=TCP localport=3000 remoteip=192.168.1.0/24 profile=private">Copy</button></div>
+        </div>
+
+        <div class="section">
+          <h2>HTTPS via reverse proxy</h2>
+          <ul class="bullets small">
+            <li>Terminate HTTPS at IIS/NGINX/Apache on port 443 with a valid certificate.</li>
+            <li>Open firewall for 443 (Private/Domain) and proxy internally to Grafana's port (e.g., 3000).</li>
+            <li>Restrict scope to required subnets; avoid Public profile when possible.</li>
+          </ul>
+          <div class="small">See: <a href="/upgrade-rollback.html">Upgrade & Rollback</a> • <a href="/install-service.html">Install as Service</a></div>
+        </div>
+
+        <div class="section">
+          <h2>Change port? Update firewall</h2>
+          <ul class="bullets small">
+            <li>Grafana default port is 3000. If you change it, adjust the firewall rule accordingly.</li>
+            <li>Delete old rule and add a new one for the new port.</li>
+          </ul>
+          <div class="cmd"><code>netsh advfirewall firewall delete rule name="Grafana HTTP"</code><button class="copy" data-cmd="netsh advfirewall firewall delete rule name=&quot;Grafana HTTP&quot;">Copy</button></div>
+        </div>
+
+        <div class="section">
+          <h2>Verify connectivity</h2>
+          <div class="cmd"><code>Test-NetConnection -ComputerName localhost -Port 3000</code><button class="copy" data-cmd="Test-NetConnection -ComputerName localhost -Port 3000">Copy</button></div>
+          <div class="cmd"><code>netstat -ano | findstr :3000</code><button class="copy" data-cmd="netstat -ano | findstr :3000">Copy</button></div>
+          <div class="small">Open a browser from an allowed machine: <a href="http://HOSTNAME:3000" rel="noopener">http://HOSTNAME:3000</a></div>
+        </div>
+
+        <div class="section">
+          <h2>GUI path (Windows Defender Firewall)</h2>
+          <ol class="small">
+            <li>Open <em>Windows Defender Firewall with Advanced Security</em>.</li>
+            <li>Inbound Rules → New Rule… → Port → TCP → Specific local ports: 3000.</li>
+            <li>Allow the connection → apply to <strong>Private</strong> (and Domain if applicable).</li>
+            <li>Name the rule (e.g., "Grafana HTTP") and finish.</li>
+            <li>Optionally edit the rule's Scope to restrict remote IP addresses.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <h2>Common pitfalls</h2>
+          <ul class="bullets small">
+            <li>Rule on wrong profile (Public only) → clients on Private network still blocked.</li>
+            <li>Endpoint protection or corporate firewall blocking traffic in addition to Windows Firewall.</li>
+            <li>Port already in use by another app — change Grafana port and update rules.</li>
+          </ul>
+          <div class="small">More help: <a href="/common-errors.html">Common Errors</a></div>
+        </div>
+
+      </section>
+
+      <aside class="card" aria-label="Next steps">
+        <div class="section">
+          <h2>Next steps</h2>
+          <ul class="bullets small">
+            <li><a href="/install-service.html">Install as Service</a></li>
+            <li><a href="/promtail-windows.html">Promtail on Windows</a></li>
+            <li><a href="/download-msi.html">Get the MSI</a></li>
+            <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
+          </ul>
+        </div>
+        <div class="section">
+          <a class="btn" href="/download-msi.html">Download MSI</a>
+          <a class="btn secondary" href="/">Back to Home</a>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© Grafana Desktop — hosted on GitHub Pages • <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> • <a href="/sitemap.xml">Sitemap</a></div>
+    </footer>
+  </div>
+
+  <!-- Cookie banner & consent -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div>
+      <strong>Cookies</strong>
+      <div class="small">We use cookies to improve the site and to enable analytics. You can accept or decline analytics cookies.</div>
+    </div>
+    <div class="cookie-actions">
+      <button id="declineCookies" class="btn secondary">Decline</button>
+      <button id="acceptCookies" class="btn">Accept analytics</button>
+    </div>
+  </div>
+
+  <script>
+    // Last updated
+    (function(){
+      try{
+        var container=document.querySelector('.container');
+        var span=document.createElement('div');
+        span.className='last-updated';
+        span.innerHTML='Last updated: <span id="lastUpdatedText"></span>';
+        container.insertBefore(span, container.children[0]);
+        var out=document.getElementById('lastUpdatedText');
+        var lm=new Date(document.lastModified);
+        if(out && !isNaN(lm.getTime())){
+          var y=lm.getFullYear(); var m=String(lm.getMonth()+1).padStart(2,'0'); var d=String(lm.getDate()).padStart(2,'0');
+          out.textContent=y+'-'+m+'-'+d;
+        }
+      }catch(e){}
+    })();
+
+    // Cookies
+    function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+ (days||365)*24*60*60*1000);document.cookie=name+"="+encodeURIComponent(value)+";path=/;expires="+d.toUTCString();}
+    function getCookie(name){var match=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return match?decodeURIComponent(match[2]):null}
+
+    (function(){
+      var consent=getCookie('gd_cookie_consent');
+      var banner=document.getElementById('cookieBanner');
+      if(!consent){banner.style.display='flex'}
+      document.getElementById('acceptCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','granted',365);banner.style.display='none';loadGtag();});
+      document.getElementById('declineCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','denied',365);banner.style.display='none';});
+      if(consent==='granted'){loadGtag()}
+    })();
+
+    // GA load on consent
+    function loadGtag(){
+      if(window.gtagLoaded) return; window.gtagLoaded=true;
+      var gtagId='G-VJWNBCNN12';
+      var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+gtagId;document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function _gt(){dataLayer.push(arguments)}
+      window.gtag=_gt;
+      gtag('js', new Date());
+      gtag('config', gtagId, { 'anonymize_ip': true });
+    }
+
+    // Copy buttons + GA events
+    function copyText(text){
+      if(navigator.clipboard && navigator.clipboard.writeText){return navigator.clipboard.writeText(text)}
+      var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve();
+    }
+    document.querySelectorAll('.copy').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var cmd=this.getAttribute('data-cmd');
+        copyText(cmd).then(()=>{
+          this.textContent='Copied'; setTimeout(()=>{this.textContent='Copy'},1200);
+          try{ if(window.gtag){ gtag('event','copy_command',{ 'event_category':'firewall','event_label':cmd }); } }catch(e){}
+        });
+      });
+    });
+  </script>
+
+  <!-- Hidden quick links -->
+  <nav aria-label="Quick links" style="display:none">
+    <a href="/download-msi.html">Download MSI</a>
+    <a href="/install-service.html">Install as Service</a>
+    <a href="/upgrade-rollback.html">Upgrade & Rollback</a>
+    <a href="/firewall.html">Configure Windows Firewall</a>
+    <a href="/promtail-windows.html">Promtail on Windows</a>
+    <a href="/common-errors.html">Common Errors</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6cff">
+
+  <title>Download Grafana for Windows (x64 MSI) — Official Installer & Integrity</title>
+  <meta name="description" content="Download Grafana for Windows (x64 MSI). Official installer link, system requirements, integrity checks, service notes, and troubleshooting. High-contrast, fast, SEO-ready.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Download Grafana for Windows (x64 MSI)">
+  <meta property="og:description" content="Official MSI installer, requirements, integrity verification and quick start.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:site_name" content="Grafana Desktop">
+  <meta property="og:image" content="/assets/og-grafana-windows.png">
+  <meta property="article:modified_time" content="2026-04-30T16:16:19Z">
+  <meta property="og:updated_time" content="2026-04-30T16:16:19Z">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- JSON-LD: SoftwareApplication (download details) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Grafana for Windows",
+    "alternateName": "Grafana OSS (Windows x64 MSI)",
+    "applicationCategory": "MonitoringApplication",
+    "operatingSystem": "Windows 10/11; Windows Server 2016+ (x64)",
+    "softwareVersion": "latest",
+    "softwareRequirements": "Windows x64, administrative privileges for service installation",
+    "fileSize": "~200 MB",
+    "downloadUrl": "https://grafana.com/grafana/download?platform=windows",
+    "releaseNotes": "https://grafana.com/docs/grafana/latest/release-notes/",
+    "publisher": {"@type": "Organization","name": "Grafana Labs","url": "https://grafana.com/"},
+    "offers": {"@type": "Offer","price": "0","priceCurrency": "USD","url": "https://grafana.com/grafana/download?platform=windows"},
+    "url": "https://grafana-desktop.github.io/download-msi.html"
+  }
+  </script>
+
+  <!-- JSON-LD: WebPage + Breadcrumbs + Last modified -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Download Grafana for Windows (x64 MSI)",
+    "url": "https://grafana-desktop.github.io/download-msi.html",
+    "dateModified": "2026-04-30T16:16:19Z",
+    "breadcrumb": {"@id": "https://grafana-desktop.github.io/download-msi.html#breadcrumb"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "https://grafana-desktop.github.io/download-msi.html#breadcrumb",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://grafana-desktop.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Download MSI", "item": "https://grafana-desktop.github.io/download-msi.html"}
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: HowTo (download & verify) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to download and verify Grafana MSI on Windows",
+    "totalTime": "PT5M",
+    "step": [
+      {"@type":"HowToStep","name":"Open the official download page","text":"Use the Download button on this page to open Grafana's official Windows download."},
+      {"@type":"HowToStep","name":"Download the MSI","text":"Choose the Windows x64 MSI and save the file."},
+      {"@type":"HowToStep","name":"Verify the signature","text":"Open file properties and check the digital signature (Publisher: Grafana Labs)."},
+      {"@type":"HowToStep","name":"Run the installer","text":"Start the MSI and follow the prompts. Admin rights are required for service setup."}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#0f1724;--bg2:#0b1220;--accent:#0ea5e9;--accent2:#7dd3fc;--text:#e6eef6;--muted:#9db0c8;--link:#22d3ee;--link-hover:#a5f3fc;--max:1100px
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,#0a1224 0%, #0a1022 100%)}
+
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* Global links with high contrast */
+    a{color:var(--link);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+    a:hover{color:var(--link-hover)}
+    .btn{ text-decoration:none !important }
+    nav a{ text-decoration:none }
+
+    /* Header & nav */
+    .site-header{position:sticky;top:0;z-index:10;background:rgba(6,12,24,0.8);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(255,255,255,0.12)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .brand{display:flex;flex-direction:column;line-height:1}
+    .brand .logo-text{font-weight:900;letter-spacing:.2px;color:#fff;font-size:18px}
+    .brand .tagline{font-size:12px;color:#cbd5e1}
+
+    nav ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+    nav a{display:inline-block;padding:9px 13px;border-radius:9px;color:#ffffff;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06)}
+    nav a:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.36)}
+    nav a:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+    /* Main */
+    .hero{display:grid;grid-template-columns:1.2fr 0.8fr;gap:24px;align-items:stretch;padding:28px 0 8px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    h1{margin:0 0 12px;font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+
+    .download-box{display:flex;flex-direction:column;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#06121f;text-decoration:none;font-weight:800}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.28);color:#ffffff}
+    .btn:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+    .small{font-size:13px;color:var(--muted)}
+    .section{margin-top:22px}
+    .section h2{margin:0 0 10px;font-size:20px}
+    .bullets{margin:0;padding-left:18px}
+
+    .info{padding:14px;border-radius:10px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);color:#bbf7fe}
+
+    footer{margin:34px 0 20px;color:var(--muted);text-align:center}
+
+    /* Last updated */
+    .last-updated{display:flex;justify-content:flex-end;color:var(--muted);font-size:12px;margin-top:6px}
+
+    /* Cookie banner */
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:#091327;padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.7);display:none;gap:12px;align-items:center;justify-content:space-between;z-index:999}
+    .cookie-actions{display:flex;gap:10px}
+
+    /* Responsive */
+    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
+    @media (max-width:640px){.header-inner{flex-direction:column;align-items:flex-start;gap:8px}.last-updated{justify-content:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <div class="container header-inner">
+      <div class="brand" aria-label="Site brand">
+        <div class="logo-text">Grafana Desktop</div>
+        <div class="tagline">Windows installers & guides — MSI, Service, Promtail</div>
+      </div>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download-msi.html">Download MSI</a></li>
+          <li><a href="/install-service.html">Install as Service</a></li>
+          <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
+          <li><a href="/firewall.html">Windows Firewall</a></li>
+          <li><a href="/promtail-windows.html">Promtail</a></li>
+          <li><a href="/common-errors.html">Common Errors</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="last-updated">Last updated: <span id="lastUpdatedText" style="margin-left:6px">2026-04-30</span></div>
+
+    <main class="hero" role="main">
+      <section class="card">
+        <h1>Download Grafana for Windows (x64 MSI)</h1>
+        <p class="lead">Get the official Grafana MSI for Windows. This page helps you choose the right build, verify integrity, and start safely on Windows 10/11 and Windows Server 2016+ (x64).</p>
+
+        <div class="section">
+          <h2>Choose the right build</h2>
+          <ul class="bullets small">
+            <li><strong>Grafana OSS (recommended here):</strong> free, core features, community plugins.</li>
+            <li><strong>Grafana Enterprise:</strong> enterprise capabilities and plugins; available on the official downloads page.</li>
+          </ul>
+          <div class="info small">We link to Grafana's official downloads. Always verify the publisher signature (Grafana Labs) after download.</div>
+        </div>
+
+        <div class="section" id="verify">
+          <h2>Verify installer integrity</h2>
+          <ol class="small">
+            <li>Right‑click the downloaded MSI → Properties → Digital Signatures.</li>
+            <li>Ensure the signature lists <em>Grafana Labs</em> as the Publisher and the signature is valid.</li>
+            <li>Optionally compare checksums published by Grafana.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <h2>System requirements</h2>
+          <ul class="bullets small">
+            <li>OS: Windows 10/11, Windows Server 2016+ (x64).</li>
+            <li>Admin rights needed to install/run as a Windows Service.</li>
+            <li>Default port: 3000 (adjust Windows Firewall scope as needed).</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>After download</h2>
+          <ul class="bullets small">
+            <li>Run the MSI and follow the installer prompts.</li>
+            <li>Open Services and ensure Grafana service is running (if installed as service).</li>
+            <li>Browse to http://localhost:3000 and complete setup.</li>
+          </ul>
+          <div class="small">Next: <a href="/install-service.html">Install as Service</a> • <a href="/firewall.html">Windows Firewall</a> • <a href="/upgrade-rollback.html">Upgrade & Rollback</a></div>
+        </div>
+      </section>
+
+      <aside class="card download-box" aria-label="Download box">
+        <div>
+          <div class="small">Official MSI (Windows x64)</div>
+          <a id="downloadButton" class="btn" href="https://grafana.com/grafana/download?platform=windows" rel="noopener noreferrer" aria-label="Download Grafana for Windows (MSI)">
+            Download Grafana for Windows (MSI)
+          </a>
+          <div class="grid-2">
+            <a class="btn secondary" href="#verify" aria-label="How to verify installer signature">Verify signature</a>
+            <a class="btn secondary" href="https://grafana.com/docs/grafana/latest/release-notes/" target="_blank" rel="noopener noreferrer">Release notes</a>
+          </div>
+          <div class="small" style="margin-top:8px">File signed by Grafana Labs. Verify digital signature after download.</div>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <strong>Requirements</strong>
+          <div>Windows 10/11 or Windows Server 2016+ (x64). Admin rights required for service install.</div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="card section">
+      <h2>Troubleshooting download issues</h2>
+      <ul class="bullets small">
+        <li>If the download doesn't start, try another browser or disable strict extensions temporarily.</li>
+        <li>Corporate proxies may block downloads; request access or use a trusted mirror approved by your org.</li>
+        <li>Always verify the digital signature after the file is saved.</li>
+      </ul>
+    </section>
+
+    <section class="card section">
+      <h2>See also</h2>
+      <ul class="bullets small">
+        <li><a href="/install-service.html">Install as a Windows Service</a></li>
+        <li><a href="/firewall.html">Configure Windows Firewall</a></li>
+        <li><a href="/promtail-windows.html">Promtail on Windows (logs to Loki)</a></li>
+        <li><a href="/common-errors.html">Common errors & fixes</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      <div>© Grafana Desktop — hosted on GitHub Pages • <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> • <a href="/sitemap.xml">Sitemap</a></div>
+    </footer>
+  </div>
+
+  <!-- Cookie banner & consent -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div>
+      <strong>Cookies</strong>
+      <div class="small">We use cookies to improve the site and to enable analytics. You can accept or decline analytics cookies.</div>
+    </div>
+    <div class="cookie-actions">
+      <button id="declineCookies" class="btn secondary">Decline</button>
+      <button id="acceptCookies" class="btn">Accept analytics</button>
+    </div>
+  </div>
+
+  <script>
+    // Show human-readable last updated from document.lastModified
+    (function(){
+      try{
+        var el=document.getElementById('lastUpdatedText');
+        if(!el){
+          var header=document.querySelector('.container');
+          var span=document.createElement('div'); span.className='last-updated'; span.innerHTML='Last updated: <span id="lastUpdatedText"></span>';
+          header.insertBefore(span, header.children[0]);
+        }
+        var out=document.getElementById('lastUpdatedText');
+        var lm=new Date(document.lastModified);
+        if(out && !isNaN(lm.getTime())){
+          var y=lm.getFullYear(); var m=String(lm.getMonth()+1).padStart(2,'0'); var d=String(lm.getDate()).padStart(2,'0');
+          out.textContent=y+'-'+m+'-'+d;
+        }
+      }catch(e){}
+    })();
+
+    // Cookies
+    function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+ (days||365)*24*60*60*1000);document.cookie=name+"="+encodeURIComponent(value)+";path=/;expires="+d.toUTCString();}
+    function getCookie(name){var match=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return match?decodeURIComponent(match[2]):null}
+
+    (function(){
+      var consent=getCookie('gd_cookie_consent');
+      var banner=document.getElementById('cookieBanner');
+      if(!consent){banner.style.display='flex'}
+      document.getElementById('acceptCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','granted',365);banner.style.display='none';loadGtag();});
+      document.getElementById('declineCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','denied',365);banner.style.display='none';});
+      if(consent==='granted'){loadGtag()}
+    })();
+
+    // GA load on consent
+    function loadGtag(){
+      if(window.gtagLoaded) return; window.gtagLoaded=true;
+      var gtagId='G-VJWNBCNN12';
+      var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+gtagId;document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function _gt(){dataLayer.push(arguments)}
+      window.gtag=_gt;
+      gtag('js', new Date());
+      gtag('config', gtagId, { 'anonymize_ip': true });
+    }
+
+    // Download tracking
+    document.getElementById('downloadButton').addEventListener('click',function(){
+      try{ if(window.gtag){ gtag('event','download',{ 'event_category':'installer','event_label':'grafana-windows-msi','value':1 }); } }catch(e){}
+    });
+  </script>
+
+  <!-- Hidden quick links for crawlers -->
+  <nav aria-label="Quick links" style="display:none">
+    <a href="/download-msi.html">Download MSI</a>
+    <a href="/install-service.html">Install as Service</a>
+    <a href="/upgrade-rollback.html">Upgrade & Rollback</a>
+    <a href="/firewall.html">Configure Windows Firewall</a>
+    <a href="/promtail-windows.html">Promtail on Windows</a>
+    <a href="/common-errors.html">Common Errors</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+  </nav>
+</body>
+</html>

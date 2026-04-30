@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6cff">
+
+  <title>Privacy Policy — Grafana Desktop</title>
+  <meta name="description" content="Privacy Policy for Grafana Desktop (GitHub Pages). What data we collect, cookies, optional Google Analytics with consent, retention, third-party links, security, and your choices.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://grafana-desktop.github.io/privacy.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Privacy Policy — Grafana Desktop">
+  <meta property="og:description" content="Learn how Grafana Desktop uses cookies and optional analytics with user consent.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/privacy.html">
+  <meta property="og:site_name" content="Grafana Desktop">
+  <meta property="og:image" content="/assets/og-grafana-windows.png">
+  <meta property="article:modified_time" content="2026-04-30T17:02:55Z">
+  <meta property="og:updated_time" content="2026-04-30T17:02:55Z">
+
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- JSON-LD: PrivacyPolicy WebPage + Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "PrivacyPolicy",
+    "name": "Privacy Policy — Grafana Desktop",
+    "url": "https://grafana-desktop.github.io/privacy.html",
+    "dateModified": "2026-04-30T17:02:55Z",
+    "breadcrumb": {"@id": "https://grafana-desktop.github.io/privacy.html#breadcrumb"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "https://grafana-desktop.github.io/privacy.html#breadcrumb",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://grafana-desktop.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Privacy", "item": "https://grafana-desktop.github.io/privacy.html"}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{--bg:#0f1724;--bg2:#0b1220;--accent:#0ea5e9;--accent2:#7dd3fc;--text:#e6eef6;--muted:#9db0c8;--link:#22d3ee;--link-hover:#a5f3fc;--max:1100px}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,#0a1224 0%, #0a1022 100%)}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    a{color:var(--link);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+    a:hover{color:var(--link-hover)}
+    .btn{text-decoration:none!important}
+    nav a{text-decoration:none}
+
+    .site-header{position:sticky;top:0;z-index:10;background:rgba(6,12,24,0.8);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(255,255,255,0.12)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .brand{display:flex;flex-direction:column;line-height:1}
+    .brand .logo-text{font-weight:900;letter-spacing:.2px;color:#fff;font-size:18px}
+    .brand .tagline{font-size:12px;color:#cbd5e1}
+
+    nav ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+    nav a{display:inline-block;padding:9px 13px;border-radius:9px;color:#fff;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06)}
+    nav a:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.36)}
+    nav a:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+    .hero{display:grid;grid-template-columns:1fr 0.8fr;gap:24px;align-items:stretch;padding:28px 0 8px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+
+    h1{margin:0 0 12px;font-size:28px}
+    h2{margin:18px 0 8px;font-size:20px}
+    .small{font-size:13px;color:var(--muted)}
+    .bullets{margin:0;padding-left:18px}
+    .section{margin-top:18px}
+
+    footer{margin:34px 0 20px;color:var(--muted);text-align:center}
+
+    .last-updated{display:flex;justify-content:flex-end;color:var(--muted);font-size:12px;margin-top:6px}
+
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:#091327;padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.7);display:none;gap:12px;align-items:center;justify-content:space-between;z-index:999}
+    .cookie-actions{display:flex;gap:10px}
+
+    @media (max-width:980px){.hero{grid-template-columns:1fr}}
+    @media (max-width:640px){.header-inner{flex-direction:column;align-items:flex-start;gap:8px}.last-updated{justify-content:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <div class="container header-inner">
+      <div class="brand" aria-label="Site brand">
+        <div class="logo-text">Grafana Desktop</div>
+        <div class="tagline">Windows installers & guides — MSI, Service, Promtail</div>
+      </div>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download-msi.html">Download MSI</a></li>
+          <li><a href="/install-service.html">Install as Service</a></li>
+          <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
+          <li><a href="/firewall.html">Windows Firewall</a></li>
+          <li><a href="/promtail-windows.html">Promtail</a></li>
+          <li><a href="/common-errors.html">Common Errors</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="last-updated">Last updated: <span id="lastUpdatedText" style="margin-left:6px">2026-04-30</span></div>
+
+    <main class="hero" role="main">
+      <section class="card">
+        <h1>Privacy Policy</h1>
+        <p class="small">This Privacy Policy explains how this site (“Grafana Desktop”) uses cookies and analytics. We host on GitHub Pages and link to official Grafana downloads. We are not affiliated with Grafana Labs.</p>
+
+        <div class="section">
+          <h2>What we collect</h2>
+          <ul class="bullets small">
+            <li><strong>Strictly necessary cookies:</strong> a single cookie to store your analytics consent choice.</li>
+            <li><strong>Optional analytics (Google Analytics 4):</strong> loaded only after you click “Accept analytics”. We send basic events like page views, download clicks, and “copy command” interactions. IP anonymization is enabled.</li>
+            <li><strong>No personal accounts or forms:</strong> we do not collect names, emails, or payment data on this site.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Cookies</h2>
+          <ul class="bullets small">
+            <li><code>gd_cookie_consent</code> — remembers whether analytics is allowed (<em>granted</em>) or declined (<em>denied</em>).</li>
+            <li>Analytics cookies are set by Google only after consent. You can revoke consent at any time using the button below.</li>
+          </ul>
+          <button id="manageConsent" class="btn secondary">Manage analytics consent</button>
+        </div>
+
+        <div class="section">
+          <h2>Analytics</h2>
+          <ul class="bullets small">
+            <li>We use Google Analytics 4 to understand aggregate usage (e.g., which pages help the most).</li>
+            <li>We enable <em>anonymize_ip</em> and avoid sending personally identifiable information.</li>
+            <li>You can opt out by declining analytics or using browser add‑ons that block tracking.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Third‑party links</h2>
+          <p class="small">We link to official resources (e.g., grafana.com). External sites have their own privacy policies. Review them before providing any data.</p>
+        </div>
+
+        <div class="section">
+          <h2>Data retention</h2>
+          <p class="small">Analytics data is retained according to our Google Analytics settings. Since we collect only basic, consented events, we keep retention to a reasonable minimum.</p>
+        </div>
+
+        <div class="section">
+          <h2>Your choices</h2>
+          <ul class="bullets small">
+            <li>Accept or decline analytics when prompted.</li>
+            <li>Revoke your choice anytime with the “Manage analytics consent” button.</li>
+            <li>Use browser privacy features or tracking protection if you prefer.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Security</h2>
+          <p class="small">We keep this site simple, avoid forms and server‑side processing, and rely on GitHub Pages. Still, no method of transmission is 100% secure on the internet.</p>
+        </div>
+
+        <div class="section">
+          <h2>Children’s privacy</h2>
+          <p class="small">This site is intended for technical audiences and not directed to children under 13.</p>
+        </div>
+
+        <div class="section">
+          <h2>Changes</h2>
+          <p class="small">We may update this policy from time to time. We will update the “Last updated” date on this page.</p>
+        </div>
+
+        <div class="section">
+          <h2>Contact</h2>
+          <p class="small">Questions or requests? Open an issue at our GitHub repository (Issues tab).</p>
+          <p class="small"><a href="https://github.com/grafana-desktop/grafana-desktop.github.io/issues" target="_blank" rel="noopener">Open GitHub Issues</a></p>
+        </div>
+      </section>
+
+      <aside class="card" aria-label="Next steps">
+        <div class="section">
+          <h2>Next</h2>
+          <ul class="bullets small">
+            <li><a href="/terms.html">Terms of Use</a></li>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© Grafana Desktop — hosted on GitHub Pages • <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> • <a href="/sitemap.xml">Sitemap</a></div>
+    </footer>
+  </div>
+
+  <!-- Cookie banner & consent -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div>
+      <strong>Cookies</strong>
+      <div class="small">We use cookies to improve the site and to enable analytics. You can accept or decline analytics cookies.</div>
+    </div>
+    <div class="cookie-actions">
+      <button id="declineCookies" class="btn secondary">Decline</button>
+      <button id="acceptCookies" class="btn">Accept analytics</button>
+    </div>
+  </div>
+
+  <script>
+    // Last updated
+    (function(){
+      try{
+        var container=document.querySelector('.container');
+        var span=document.createElement('div');
+        span.className='last-updated';
+        span.innerHTML='Last updated: <span id="lastUpdatedText"></span>';
+        container.insertBefore(span, container.children[0]);
+        var out=document.getElementById('lastUpdatedText');
+        var lm=new Date(document.lastModified);
+        if(out && !isNaN(lm.getTime())){
+          var y=lm.getFullYear(); var m=String(lm.getMonth()+1).padStart(2,'0'); var d=String(lm.getDate()).padStart(2,'0');
+          out.textContent=y+'-'+m+'-'+d;
+        }
+      }catch(e){}
+    })();
+
+    // Cookie helpers
+    function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+ (days||365)*24*60*60*1000);document.cookie=name+"="+encodeURIComponent(value)+";path=/;expires="+d.toUTCString();}
+    function getCookie(name){var match=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return match?decodeURIComponent(match[2]):null}
+
+    // Consent banner toggle
+    (function(){
+      var consent=getCookie('gd_cookie_consent');
+      var banner=document.getElementById('cookieBanner');
+      if(!consent){banner.style.display='flex'}
+      document.getElementById('acceptCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','granted',365);banner.style.display='none';loadGtag();});
+      document.getElementById('declineCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','denied',365);banner.style.display='none';});
+      if(consent==='granted'){loadGtag()}
+    })();
+
+    // Manage consent button
+    document.getElementById('manageConsent').addEventListener('click', function(){
+      var banner=document.getElementById('cookieBanner');
+      banner.style.display='flex';
+    });
+
+    // GA load on consent
+    function loadGtag(){
+      if(window.gtagLoaded) return; window.gtagLoaded=true;
+      var gtagId='G-VJWNBCNN12';
+      var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+gtagId;document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function _gt(){dataLayer.push(arguments)}
+      window.gtag=_gt;
+      gtag('js', new Date());
+      gtag('config', gtagId, { 'anonymize_ip': true });
+    }
+  </script>
+
+  <!-- Hidden quick links -->
+  <nav aria-label="Quick links" style="display:none">
+    <a href="/download-msi.html">Download MSI</a>
+    <a href="/install-service.html">Install as Service</a>
+    <a href="/upgrade-rollback.html">Upgrade & Rollback</a>
+    <a href="/firewall.html">Configure Windows Firewall</a>
+    <a href="/promtail-windows.html">Promtail on Windows</a>
+    <a href="/common-errors.html">Common Errors</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+  </nav>
+</body>
+</html>

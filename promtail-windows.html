@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6cff">
+
+  <title>Promtail on Windows — Collect Event Logs & Files, Send to Loki</title>
+  <meta name="description" content="Set up Promtail on Windows to collect Windows Event Logs and file logs, run as a service, and send to Loki. Step-by-step guide with firewall, verification and troubleshooting.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://grafana-desktop.github.io/promtail-windows.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Promtail on Windows — Logs to Loki">
+  <meta property="og:description" content="Install Promtail on Windows, collect Event Logs and files, and ship to Loki with best practices.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/promtail-windows.html">
+  <meta property="og:site_name" content="Grafana Desktop">
+  <meta property="og:image" content="/assets/og-grafana-windows.png">
+  <meta property="article:modified_time" content="2026-04-30T16:49:15Z">
+  <meta property="og:updated_time" content="2026-04-30T16:49:15Z">
+
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- JSON-LD: WebPage + Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Promtail on Windows — Logs to Loki",
+    "url": "https://grafana-desktop.github.io/promtail-windows.html",
+    "dateModified": "2026-04-30T16:49:15Z",
+    "breadcrumb": {"@id": "https://grafana-desktop.github.io/promtail-windows.html#breadcrumb"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "https://grafana-desktop.github.io/promtail-windows.html#breadcrumb",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://grafana-desktop.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Promtail on Windows", "item": "https://grafana-desktop.github.io/promtail-windows.html"}
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: HowTo (Promtail setup) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Install Promtail on Windows and send logs to Loki",
+    "totalTime": "PT15M",
+    "step": [
+      {"@type":"HowToStep","name":"Download Promtail for Windows","text":"Get the promtail-windows-amd64.exe from the official Loki releases."},
+      {"@type":"HowToStep","name":"Create a config file","text":"Create a YAML config with windows_eventlog and file targets as needed."},
+      {"@type":"HowToStep","name":"Run Promtail","text":"Start Promtail with -config.file=... to test locally."},
+      {"@type":"HowToStep","name":"Install as a service","text":"Register Promtail as a Windows service for auto start."},
+      {"@type":"HowToStep","name":"Verify in Grafana","text":"Open Grafana, query Loki logs and ensure events arrive."}
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Where do I download Promtail for Windows?","acceptedAnswer":{"@type":"Answer","text":"From the official Loki releases (promtail-windows-amd64.exe). Always verify the source and integrity."}},
+      {"@type":"Question","name":"Can Promtail collect Windows Event Logs?","acceptedAnswer":{"@type":"Answer","text":"Yes. Promtail supports windows_eventlog inputs. You can specify channels like Application, System, Security (Security may require elevated permissions)."}},
+      {"@type":"Question","name":"Does Promtail need a firewall rule?","acceptedAnswer":{"@type":"Answer","text":"Promtail typically makes outbound connections to Loki and doesn't require inbound rules. No Windows Firewall rule is needed unless you expose a local endpoint."}},
+      {"@type":"Question","name":"How to run Promtail as a service?","acceptedAnswer":{"@type":"Answer","text":"Use sc.exe to create a Windows service pointing to promtail.exe with -config.file=... and set start=auto."}}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{--bg:#0f1724;--bg2:#0b1220;--accent:#0ea5e9;--accent2:#7dd3fc;--text:#e6eef6;--muted:#9db0c8;--link:#22d3ee;--link-hover:#a5f3fc;--max:1100px}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,#0a1224 0%, #0a1022 100%)}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    a{color:var(--link);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+    a:hover{color:var(--link-hover)}
+    .btn{text-decoration:none!important}
+    nav a{text-decoration:none}
+
+    .site-header{position:sticky;top:0;z-index:10;background:rgba(6,12,24,0.8);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(255,255,255,0.12)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .brand{display:flex;flex-direction:column;line-height:1}
+    .brand .logo-text{font-weight:900;letter-spacing:.2px;color:#fff;font-size:18px}
+    .brand .tagline{font-size:12px;color:#cbd5e1}
+
+    nav ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+    nav a{display:inline-block;padding:9px 13px;border-radius:9px;color:#fff;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06)}
+    nav a:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.36)}
+    nav a:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+    .hero{display:grid;grid-template-columns:1fr 0.8fr;gap:24px;align-items:stretch;padding:28px 0 8px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    h1{margin:0 0 12px;font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
+
+    .section{margin-top:22px}
+    .section h2{margin:0 0 10px;font-size:20px}
+    .bullets{margin:0;padding-left:18px}
+    .small{font-size:13px;color:var(--muted)}
+
+    .cmd{display:flex;align-items:center;gap:8px;margin:8px 0;padding:10px;border-radius:8px;background:#0b1426;border:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;color:#e2e8f0}
+    .copy{margin-left:auto;padding:6px 10px;border-radius:7px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.08);color:#fff;cursor:pointer}
+    .copy:hover{background:rgba(255,255,255,0.18)}
+
+    .info{padding:14px;border-radius:10px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);color:#bbf7fe}
+    .warn{padding:14px;border-radius:10px;background:rgba(244,114,182,0.08);border:1px solid rgba(244,114,182,0.25);color:#fbcfe8}
+
+    footer{margin:34px 0 20px;color:var(--muted);text-align:center}
+
+    .last-updated{display:flex;justify-content:flex-end;color:var(--muted);font-size:12px;margin-top:6px}
+
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:#091327;padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.7);display:none;gap:12px;align-items:center;justify-content:space-between;z-index:999}
+    .cookie-actions{display:flex;gap:10px}
+
+    @media (max-width:980px){.hero{grid-template-columns:1fr}}
+    @media (max-width:640px){.header-inner{flex-direction:column;align-items:flex-start;gap:8px}.last-updated{justify-content:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <div class="container header-inner">
+      <div class="brand" aria-label="Site brand">
+        <div class="logo-text">Grafana Desktop</div>
+        <div class="tagline">Windows installers & guides — MSI, Service, Promtail</div>
+      </div>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download-msi.html">Download MSI</a></li>
+          <li><a href="/install-service.html">Install as Service</a></li>
+          <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
+          <li><a href="/firewall.html">Windows Firewall</a></li>
+          <li><a href="/promtail-windows.html">Promtail</a></li>
+          <li><a href="/common-errors.html">Common Errors</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="last-updated">Last updated: <span id="lastUpdatedText" style="margin-left:6px">2026-04-30</span></div>
+
+    <main class="hero" role="main">
+      <section class="card">
+        <h1>Promtail on Windows (send logs to Loki)</h1>
+        <p class="lead">Collect Windows Event Logs and file logs with Promtail and ship them to Loki. This guide covers download, config basics, service install and verification in Grafana.</p>
+
+        <div class="section">
+          <h2>Prerequisites</h2>
+          <ul class="bullets small">
+            <li>Loki endpoint URL (cloud or self‑hosted) and credentials if needed.</li>
+            <li>Administrative privileges to run Promtail as a service.</li>
+            <li>YAML config file path (e.g., C:\\Promtail\\promtail.yaml).</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Download Promtail</h2>
+          <ul class="bullets small">
+            <li>Get <strong>promtail-windows-amd64.exe</strong> from the official Loki releases.</li>
+            <li>Place it in a folder like <code>C:\\Promtail\\</code> and create a config file next to it.</li>
+          </ul>
+          <div class="cmd"><code>mkdir C:\\Promtail</code><button class="copy" data-cmd="mkdir C:\\Promtail">Copy</button></div>
+        </div>
+
+        <div class="section">
+          <h2>Run Promtail (ad-hoc)</h2>
+          <p class="small">Use this to test your configuration before installing the service.</p>
+          <div class="cmd"><code>C:\\Promtail\\promtail-windows-amd64.exe -config.file=C:\\Promtail\\promtail.yaml</code><button class="copy" data-cmd="C:\\Promtail\\promtail-windows-amd64.exe -config.file=C:\\Promtail\\promtail.yaml">Copy</button></div>
+        </div>
+
+        <div class="section">
+          <h2>Install as a Windows service</h2>
+          <p class="small">Register Promtail as a service for automatic start on boot.</p>
+          <div class="cmd"><code>sc.exe create promtail binPath= "C:\\Promtail\\promtail-windows-amd64.exe -config.file=C:\\Promtail\\promtail.yaml" start= auto</code><button class="copy" data-cmd="sc.exe create promtail binPath= &quot;C:\\Promtail\\promtail-windows-amd64.exe -config.file=C:\\Promtail\\promtail.yaml&quot; start= auto">Copy</button></div>
+          <div class="cmd"><code>sc.exe start promtail</code><button class="copy" data-cmd="sc.exe start promtail">Copy</button></div>
+          <div class="warn small">If you run Promtail under a custom service account, ensure it has permission to read targeted log files and Event Log channels.</div>
+        </div>
+
+        <div class="section">
+          <h2>Windows Event Logs (overview)</h2>
+          <ul class="bullets small">
+            <li>Promtail can subscribe to channels like <em>Application</em>, <em>System</em>, and <em>Security</em> (Security may require higher privileges).</li>
+            <li>Start with Application/System for basic visibility; add others as needed.</li>
+            <li>Filter by levels or providers to reduce noise where appropriate.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>File logs (overview)</h2>
+          <ul class="bullets small">
+            <li>Point Promtail at rolling log files (e.g., <code>C:\\Logs\\*.log</code>).</li>
+            <li>Ensure the service account can read the files and directories.</li>
+            <li>Use labels (job, instance, etc.) to identify the source in Loki.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Send to Loki</h2>
+          <ul class="bullets small">
+            <li>Configure the Loki <em>client.url</em> and authentication if required.</li>
+            <li>Verify ingestion by opening Grafana → Explore → Loki → query recent logs.</li>
+          </ul>
+          <div class="info small">Promtail primarily makes <strong>outbound</strong> connections. Typically no Windows Firewall inbound rule is needed.</div>
+        </div>
+
+        <div class="section">
+          <h2>Troubleshooting</h2>
+          <ul class="bullets small">
+            <li><strong>No logs appearing in Loki:</strong> check Promtail console/service logs for config errors; verify Loki URL/credentials and network egress.</li>
+            <li><strong>YAML errors:</strong> indentation and escaping backslashes on Windows are common pitfalls.</li>
+            <li><strong>Access denied to Event Logs or files:</strong> run Promtail with sufficient rights or use a dedicated service account with read access.</li>
+            <li><strong>High volume/noise:</strong> add filters and relabeling to reduce unwanted events.</li>
+          </ul>
+          <div class="small">See also: <a href="/firewall.html">Windows Firewall</a> • <a href="/common-errors.html">Common Errors</a></div>
+        </div>
+      </section>
+
+      <aside class="card" aria-label="Next steps">
+        <div class="section">
+          <h2>Next steps</h2>
+          <ul class="bullets small">
+            <li><a href="/download-msi.html">Download MSI</a></li>
+            <li><a href="/install-service.html">Install Grafana as a service</a></li>
+            <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
+            <li><a href="/common-errors.html">Common Errors</a></li>
+          </ul>
+        </div>
+        <div class="section">
+          <a class="btn" href="/download-msi.html">Get Grafana</a>
+          <a class="btn secondary" href="/">Back to Home</a>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© Grafana Desktop — hosted on GitHub Pages • <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> • <a href="/sitemap.xml">Sitemap</a></div>
+    </footer>
+  </div>
+
+  <!-- Cookie banner & consent -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div>
+      <strong>Cookies</strong>
+      <div class="small">We use cookies to improve the site and to enable analytics. You can accept or decline analytics cookies.</div>
+    </div>
+    <div class="cookie-actions">
+      <button id="declineCookies" class="btn secondary">Decline</button>
+      <button id="acceptCookies" class="btn">Accept analytics</button>
+    </div>
+  </div>
+
+  <script>
+    // Last updated
+    (function(){
+      try{
+        var container=document.querySelector('.container');
+        var span=document.createElement('div');
+        span.className='last-updated';
+        span.innerHTML='Last updated: <span id="lastUpdatedText"></span>';
+        container.insertBefore(span, container.children[0]);
+        var out=document.getElementById('lastUpdatedText');
+        var lm=new Date(document.lastModified);
+        if(out && !isNaN(lm.getTime())){
+          var y=lm.getFullYear(); var m=String(lm.getMonth()+1).padStart(2,'0'); var d=String(lm.getDate()).padStart(2,'0');
+          out.textContent=y+'-'+m+'-'+d;
+        }
+      }catch(e){}
+    })();
+
+    // Cookies
+    function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+ (days||365)*24*60*60*1000);document.cookie=name+"="+encodeURIComponent(value)+";path=/;expires="+d.toUTCString();}
+    function getCookie(name){var match=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return match?decodeURIComponent(match[2]):null}
+
+    (function(){
+      var consent=getCookie('gd_cookie_consent');
+      var banner=document.getElementById('cookieBanner');
+      if(!consent){banner.style.display='flex'}
+      document.getElementById('acceptCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','granted',365);banner.style.display='none';loadGtag();});
+      document.getElementById('declineCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','denied',365);banner.style.display='none';});
+      if(consent==='granted'){loadGtag()}
+    })();
+
+    // GA load on consent
+    function loadGtag(){
+      if(window.gtagLoaded) return; window.gtagLoaded=true;
+      var gtagId='G-VJWNBCNN12';
+      var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+gtagId;document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function _gt(){dataLayer.push(arguments)}
+      window.gtag=_gt;
+      gtag('js', new Date());
+      gtag('config', gtagId, { 'anonymize_ip': true });
+    }
+
+    // Copy buttons + GA events
+    function copyText(text){
+      if(navigator.clipboard && navigator.clipboard.writeText){return navigator.clipboard.writeText(text)}
+      var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve();
+    }
+    document.querySelectorAll('.copy').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var cmd=this.getAttribute('data-cmd');
+        copyText(cmd).then(()=>{
+          this.textContent='Copied'; setTimeout(()=>{this.textContent='Copy'},1200);
+          try{ if(window.gtag){ gtag('event','copy_command',{ 'event_category':'promtail','event_label':cmd }); } }catch(e){}
+        });
+      });
+    });
+  </script>
+
+  <!-- Hidden quick links -->
+  <nav aria-label="Quick links" style="display:none">
+    <a href="/download-msi.html">Download MSI</a>
+    <a href="/install-service.html">Install as Service</a>
+    <a href="/upgrade-rollback.html">Upgrade & Rollback</a>
+    <a href="/firewall.html">Configure Windows Firewall</a>
+    <a href="/promtail-windows.html">Promtail on Windows</a>
+    <a href="/common-errors.html">Common Errors</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Grafana for Windows — OG image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1224"/>
+      <stop offset="100%" stop-color="#0a1022"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.75" cy="0.3" r="0.6">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="900" cy="180" r="380" fill="url(#glow)"/>
+
+  <!-- decorative waves -->
+  <path d="M0 520 C 200 460, 450 600, 700 540 S 1100 520, 1200 560" fill="none" stroke="#22d3ee" stroke-opacity="0.12" stroke-width="18"/>
+  <path d="M0 560 C 220 520, 480 640, 720 590 S 1080 570, 1200 600" fill="none" stroke="#7dd3fc" stroke-opacity="0.10" stroke-width="14"/>
+
+  <!-- title -->
+  <g transform="translate(72,120)">
+    <text x="0" y="0" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="72" font-weight="900" fill="#ffffff" letter-spacing="0.5">Grafana for Windows</text>
+    <text x="0" y="54" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="30" font-weight="600" fill="#bbf7fe">MSI • Service • Promtail • Windows logs</text>
+  </g>
+
+  <!-- pill -->
+  <g transform="translate(72,240)" filter="url(#soft)">
+    <rect x="0" y="0" rx="14" ry="14" width="420" height="54" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.25)"/>
+    <text x="22" y="35" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="22" font-weight="700" fill="#e6eef6">Windows x64 MSI • Official download</text>
+  </g>
+
+  <!-- Windows logo (simple panes) -->
+  <g transform="translate(860,120)">
+    <g fill="#22d3ee" opacity="0.9">
+      <rect x="0" y="0" width="120" height="120" rx="4"/>
+      <rect x="140" y="0" width="120" height="120" rx="4"/>
+      <rect x="0" y="140" width="120" height="120" rx="4"/>
+      <rect x="140" y="140" width="120" height="120" rx="4"/>
+    </g>
+    <g fill="#7dd3fc" opacity="0.28">
+      <rect x="-10" y="-10" width="120" height="120" rx="8"/>
+      <rect x="130" y="-10" width="120" height="120" rx="8"/>
+      <rect x="-10" y="130" width="120" height="120" rx="8"/>
+      <rect x="130" y="130" width="120" height="120" rx="8"/>
+    </g>
+  </g>
+
+  <!-- site url -->
+  <text x="72" y="560" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="24" fill="#cfefff">grafana-desktop.github.io</text>
+
+  <!-- subtle border -->
+  <rect x="8" y="8" width="1184" height="614" rx="18" ry="18" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+</svg>
