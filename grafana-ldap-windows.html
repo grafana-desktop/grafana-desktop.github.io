@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>Grafana LDAP & Active Directory Authentication on Windows</title>
+  <meta name="description" content="Configure Grafana LDAP authentication with Windows Active Directory. ldap.toml setup, group-to-role mapping, LDAPS, debug logging and common AD troubleshooting.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-ldap-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="Grafana LDAP & Active Directory Authentication on Windows">
+  <meta property="og:description" content="Configure Grafana LDAP authentication with Windows Active Directory. ldap.toml setup, group-to-role mapping, LDAPS, debug logging and common AD troubleshooting.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-ldap-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,96 +297,137 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>LDAP / Active Directory</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">👥 Authentication</div>
+      <h1>Grafana LDAP &amp; Active Directory Authentication on Windows</h1>
+      <p>Configure Grafana to authenticate users against Windows Active Directory or any LDAP server. Covers ldap.toml setup, group-to-role mapping, debugging LDAP connections and common AD configuration patterns.</p>
     </section>
 
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
-    </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Grafana running on Windows (see <a href="install-service.html">Install as Service</a>)</li>
+        <li>Access to an Active Directory domain controller or LDAP server</li>
+        <li>A read-only service account in AD for LDAP bind (recommended)</li>
+        <li>Grafana OSS supports basic LDAP; Grafana Enterprise adds team sync and enhanced LDAP features</li>
+      </ul>
+      <div class="info-box">
+        <svg width="16" height="16" style="color:var(--blue2);flex-shrink:0;margin-top:1px"><use href="#ico-info"/></svg>
+        <p>LDAP authentication is available in Grafana OSS. For Active Directory group sync to Grafana Teams, Grafana Enterprise is required.</p>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>Step 1 — Enable LDAP in grafana.ini</h2>
+      <div class="code-block"><code>[auth.ldap]
+enabled = true
+config_file = C:\Program Files\GrafanaLabs\grafana\conf\ldap.toml
+allow_sign_up = true</code></div>
+      <p>Restart Grafana after editing grafana.ini.</p>
+    </div>
+
+    <div class="card">
+      <h2>Step 2 — Create ldap.toml for Active Directory</h2>
+      <p>Create <span class="ic">C:\Program Files\GrafanaLabs\grafana\conf\ldap.toml</span> with the following content. Adjust values for your domain:</p>
+      <div class="code-block"><code>[[servers]]
+# Domain controller address and port (389 LDAP, 636 LDAPS)
+host = "dc01.yourdomain.local"
+port = 389
+use_ssl = false
+start_tls = false
+ssl_skip_verify = false
+
+# Bind DN — use a dedicated read-only service account
+bind_dn = "CN=svc-grafana,OU=ServiceAccounts,DC=yourdomain,DC=local"
+bind_password = "ServiceAccountPassword"
+
+# Base DN for user search
+search_base_dns = ["OU=Users,DC=yourdomain,DC=local"]
+
+# Filter to match users (objectClass=person for AD)
+search_filter = "(&(objectClass=person)(sAMAccountName=%s))"
+
+# Attribute mappings
+[servers.attributes]
+name      = "givenName"
+surname   = "sn"
+username  = "sAMAccountName"
+member_of = "memberOf"
+email     = "mail"
+
+# Group to Grafana role mappings
+[[servers.group_mappings]]
+group_dn = "CN=Grafana-Admins,OU=Groups,DC=yourdomain,DC=local"
+org_role = "Admin"
+
+[[servers.group_mappings]]
+group_dn = "CN=Grafana-Editors,OU=Groups,DC=yourdomain,DC=local"
+org_role = "Editor"
+
+[[servers.group_mappings]]
+# Fallback — any authenticated AD user gets Viewer role
+group_dn = "*"
+org_role = "Viewer"</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Secure LDAP (LDAPS) on port 636</h2>
+      <p>For production, use LDAPS to encrypt directory queries:</p>
+      <div class="code-block"><code>[[servers]]
+host = "dc01.yourdomain.local"
+port = 636
+use_ssl = true
+start_tls = false
+
+# If using a private CA, specify the root cert:
+root_ca_cert = "C:\certs\your-ca.crt"
+
+# Or skip verification for internal CAs (not recommended for production):
+# ssl_skip_verify = true</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Step 3 — Restart and test</h2>
+      <div class="code-block"><code># Restart Grafana to load new LDAP config
+Restart-Service -Name "Grafana"
+
+# Test LDAP login from the Grafana CLI
+cd "C:\Program Files\GrafanaLabs\grafanain"
+.\grafana-cli.exe admin user-manager ldap-test --name "testuser"</code></div>
+      <p>Try logging in to Grafana with an Active Directory username (just the username, not the full UPN). If login fails, check the Grafana log:</p>
+      <div class="code-block"><code>Get-Content "C:\Program Files\GrafanaLabs\grafana\data\log\grafana.log" -Tail 30 | Select-String "ldap"</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Troubleshooting LDAP</h2>
+      <h3>Enable LDAP debug logging</h3>
+      <div class="code-block"><code>[log]
+filters = ldap:debug</code></div>
+      <h3>Common errors</h3>
+      <ul>
+        <li><strong>Invalid credentials:</strong> Check <span class="ic">bind_dn</span> format — use full Distinguished Name, not UPN. Verify the bind password.</li>
+        <li><strong>No such object:</strong> The <span class="ic">search_base_dns</span> path doesn't exist. Verify the OU path in Active Directory Users and Computers.</li>
+        <li><strong>Connection refused:</strong> Port 389 or 636 is blocked. Add a Windows Firewall outbound rule or check AD firewall settings.</li>
+        <li><strong>User logs in but gets wrong role:</strong> Check <span class="ic">group_mappings</span> — the group DN must be the full Distinguished Name of the AD group.</li>
+      </ul>
+      <h3>Test LDAP connectivity from PowerShell</h3>
+      <div class="code-block"><code># Test LDAP port is reachable
+Test-NetConnection -ComputerName dc01.yourdomain.local -Port 389
+
+# Basic LDAP query using .NET
+$searcher = New-Object DirectoryServices.DirectorySearcher
+$searcher.SearchRoot = "LDAP://DC=yourdomain,DC=local"
+$searcher.Filter = "(sAMAccountName=testuser)"
+$result = $searcher.FindOne()
+$result.Properties</code></div>
+    </div>
+
+    <div class="related-grid" style="margin-top:8px">
+      <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini reference</strong><span style="color:var(--muted);font-size:12px">Auth configuration options</span></div></a>
+      <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Service setup</strong><span style="color:var(--muted);font-size:12px">Run Grafana on Windows</span></div></a>
+      <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">HTTPS setup</strong><span style="color:var(--muted);font-size:12px">Secure Grafana with TLS</span></div></a>
+      <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors</strong><span style="color:var(--muted);font-size:12px">Login and auth fixes</span></div></a>
     </div>
   </main>
   <footer>

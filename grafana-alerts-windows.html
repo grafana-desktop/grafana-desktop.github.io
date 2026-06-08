@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>Grafana Alerts & Notifications on Windows — Email, Slack, Teams Setup</title>
+  <meta name="description" content="Set up Grafana alerting on Windows. Configure SMTP email, Slack and Microsoft Teams contact points, create alert rules, notification policies and troubleshoot alert delivery.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-alerts-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="Grafana Alerts & Notifications on Windows — Email, Slack, Teams Setup">
+  <meta property="og:description" content="Set up Grafana alerting on Windows. Configure SMTP email, Slack and Microsoft Teams contact points, create alert rules, notification policies and troubleshoot alert delivery.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-alerts-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,96 +297,99 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Alerts &amp; Notifications</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">🔔 Alerting</div>
+      <h1>Grafana Alerts &amp; Notifications on Windows</h1>
+      <p>Set up Grafana Alerting on Windows — create alert rules, configure notification channels (email, Slack, Teams, PagerDuty), manage alert groups and troubleshoot alert delivery. Covers both Unified Alerting and legacy alerting.</p>
     </section>
 
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
-    </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
+      <h2>Grafana Alerting overview</h2>
+      <p>Grafana Unified Alerting (introduced in Grafana 8, default in Grafana 9+) provides a powerful rule-based alerting engine with support for multiple notification channels simultaneously. Alerts evaluate queries at configured intervals and fire when conditions are met.</p>
+      <div class="feature-grid">
+        <div class="feature-item"><h4>📊 Alert Rules</h4><p>Define conditions on any data source query. Set thresholds, evaluate over time windows.</p></div>
+        <div class="feature-item"><h4>📬 Contact Points</h4><p>Email, Slack, Teams, PagerDuty, webhook and 20+ other notification channels.</p></div>
+        <div class="feature-item"><h4>🗂 Notification Policies</h4><p>Route alerts to the right team based on labels. Group and silence alerts.</p></div>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>Step 1 — Configure SMTP for email alerts</h2>
+      <p>Email notifications require SMTP to be configured in grafana.ini. Open <span class="ic">C:\Program Files\GrafanaLabs\grafana\conf\grafana.ini</span>:</p>
+      <div class="code-block"><code>[smtp]
+enabled = true
+host = smtp.yourdomain.com:587
+user = grafana-alerts@yourdomain.com
+password = YourSmtpPassword
+from_address = grafana-alerts@yourdomain.com
+from_name = Grafana Alerts
+startTLS_policy = MandatoryStartTLS
+
+# For Office 365:
+# host = smtp.office365.com:587
+# startTLS_policy = MandatoryStartTLS
+
+# For Gmail (with App Password):
+# host = smtp.gmail.com:587
+# user = you@gmail.com
+# password = your-app-password</code></div>
+      <div class="code-block"><code>Restart-Service -Name "Grafana"</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Step 2 — Create a Contact Point</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Open Alerting menu</h4><p>In Grafana, go to <strong>Alerting → Contact points → New contact point</strong>.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Add Email contact</h4><p>Select <em>Email</em> as the type. Enter recipient addresses. Click <strong>Test</strong> to send a test notification and verify SMTP is working.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Add Microsoft Teams (optional)</h4><p>Select <em>Microsoft Teams</em>. Paste your Teams Incoming Webhook URL. Test the connection.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Add Slack (optional)</h4><p>Select <em>Slack</em>. Enter your Slack webhook URL and channel name (<span class="ic">#alerts</span>).</p></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Step 3 — Create an Alert Rule</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Navigate to Alert Rules</h4><p>Go to <strong>Alerting → Alert rules → New alert rule</strong>.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Write the query</h4><p>Select your data source (Prometheus, InfluxDB, etc.) and write the query. For Prometheus, a common example: <span class="ic">avg(rate(node_cpu_seconds_total{mode!="idle"}[5m])) * 100</span></p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Set the condition</h4><p>Under <strong>Define alert condition</strong>, set the threshold. Example: WHEN last() IS ABOVE 80 — fires when CPU is above 80%.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Set evaluation interval</h4><p>Configure <em>Evaluate every</em> (e.g. 1m) and <em>For</em> duration (e.g. 5m) — alert fires only if the condition persists for 5 minutes.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Add labels and link to notification policy</h4><p>Add labels like <span class="ic">severity=critical</span> and <span class="ic">team=ops</span>. These labels route the alert to the correct contact point via notification policies.</p></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Notification Policies — route alerts to the right team</h2>
+      <p>Go to <strong>Alerting → Notification policies</strong>. The default policy routes all alerts to the default contact point. Add child policies to route specific labels to specific channels:</p>
+      <div class="code-block"><code># Example policy logic (configured in the UI, not YAML):
+# IF label severity=critical → send to PagerDuty + Email
+# IF label team=database → send to Slack #db-alerts
+# Default → send to Email only</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Silence and group alerts</h2>
+      <h3>Silence an alert (maintenance window)</h3>
+      <p>Go to <strong>Alerting → Silences → New silence</strong>. Set a label matcher (e.g. <span class="ic">severity=warning</span>), start/end time and a comment. Matching alerts won't send notifications during the silence period.</p>
+      <h3>Alert groups</h3>
+      <p>Grafana groups alerts by label to reduce notification noise. Configure grouping in <strong>Alerting → Notification policies → Edit → Group by</strong>. Common grouping: by <span class="ic">alertname</span> and <span class="ic">cluster</span>.</p>
+    </div>
+
+    <div class="card">
+      <h2>Troubleshooting alert delivery</h2>
+      <h3>Test contact point</h3>
+      <p>In <strong>Alerting → Contact points</strong>, click the test button next to your contact point. If the test fails, check SMTP settings and credentials.</p>
+      <h3>Check alert state history</h3>
+      <p>Go to <strong>Alerting → Alert rules</strong> and click the alert. The state history shows when it fired and was resolved.</p>
+      <h3>Check Grafana logs</h3>
+      <div class="code-block"><code>Get-Content "C:\Program Files\GrafanaLabs\grafana\data\log\grafana.log" -Tail 50 | Select-String "alerting|notification|smtp"</code></div>
+    </div>
+
+    <div class="related-grid" style="margin-top:8px">
+      <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini — SMTP config</strong><span style="color:var(--muted);font-size:12px">Email settings reference</span></div></a>
+      <a href="grafana-datasource-windows.html" class="related-link"><div class="related-link-icon">🔌</div><div><strong style="display:block;margin-bottom:2px">Data sources guide</strong><span style="color:var(--muted);font-size:12px">Connect Prometheus, InfluxDB</span></div></a>
+      <a href="grafana-dashboard-windows.html" class="related-link"><div class="related-link-icon">📊</div><div><strong style="display:block;margin-bottom:2px">Dashboard guide</strong><span style="color:var(--muted);font-size:12px">Build dashboards on Windows</span></div></a>
+      <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors</strong><span style="color:var(--muted);font-size:12px">Fix Grafana issues</span></div></a>
     </div>
   </main>
   <footer>

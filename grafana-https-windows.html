@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>Set Up HTTPS for Grafana on Windows — Nginx + TLS Guide</title>
+  <meta name="description" content="Secure Grafana on Windows with HTTPS using Nginx as a reverse proxy. Self-signed and Let's Encrypt certificates, grafana.ini settings, firewall rules and SSL testing.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-https-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="Set Up HTTPS for Grafana on Windows — Nginx + TLS Guide">
+  <meta property="og:description" content="Secure Grafana on Windows with HTTPS using Nginx as a reverse proxy. Self-signed and Let's Encrypt certificates, grafana.ini settings, firewall rules and SSL testing.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-https-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,96 +297,141 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>HTTPS Setup</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">🔐 Security</div>
+      <h1>Set Up HTTPS for Grafana on Windows</h1>
+      <p>Secure Grafana with HTTPS on Windows using Nginx as a reverse proxy with a TLS certificate. Covers self-signed certs for internal use and Let's Encrypt for public-facing deployments. Includes grafana.ini settings and Windows Firewall rules.</p>
     </section>
 
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
-    </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
+      <h2>Architecture: Nginx reverse proxy + Grafana</h2>
+      <p>The recommended approach for HTTPS is to run Grafana on <span class="ic">localhost:3000</span> (no TLS) and place Nginx in front to handle HTTPS on port 443. Nginx terminates TLS and proxies requests to Grafana internally.</p>
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)">
+        Browser → HTTPS :443 → <span style="color:var(--accent)">Nginx (TLS)</span> → HTTP :3000 → <span style="color:var(--blue2)">Grafana</span>
       </div>
+      <p>This way Grafana doesn't need to handle certificates directly, and Nginx can serve multiple services on the same server.</p>
+    </div>
+
+    <div class="card">
+      <h2>Option A — Self-signed certificate (internal/LAN)</h2>
+      <p>For internal monitoring dashboards not exposed to the internet, a self-signed cert is the quickest solution.</p>
+      <div class="code-block"><code># Generate self-signed cert with OpenSSL (install from https://slproweb.com/products/Win32OpenSSL.html)
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 `
+  -keyout C:
+ginx\ssl\grafana.key `
+  -out C:
+ginx\ssl\grafana.crt `
+  -subj "/CN=grafana.local/O=MyOrg/C=US"
+
+# Or use PowerShell's built-in cert cmdlet (Windows Server)
+$cert = New-SelfSignedCertificate `
+  -DnsName "grafana.local" `
+  -CertStoreLocation "cert:\LocalMachine\My" `
+  -NotAfter (Get-Date).AddYears(2)
+
+# Export to PEM format for Nginx
+$certPath = "cert:\LocalMachine\My\$($cert.Thumbprint)"
+Export-Certificate -Cert $certPath -FilePath "C:
+ginx\ssl\grafana.crt" -Type CERT</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Option B — Let's Encrypt (public domain)</h2>
+      <p>For public-facing Grafana instances, use <a href="https://github.com/win-acme/win-acme" target="_blank" rel="noopener">win-acme</a> to obtain free certificates from Let's Encrypt on Windows.</p>
+      <div class="code-block"><code># Download win-acme from https://github.com/win-acme/win-acme/releases
+# Run as Administrator and follow prompts
+wacs.exe --target manual --host grafana.yourdomain.com --webroot C:
+ginx\html --installation script</code></div>
+      <div class="warn"><strong>Requirement:</strong> Port 80 must be open and publicly accessible for HTTP-01 challenge. Your domain must point to the server's public IP.</div>
+    </div>
+
+    <div class="card">
+      <h2>Nginx configuration for Grafana HTTPS</h2>
+      <p>Install Nginx for Windows from <a href="https://nginx.org/en/download.html" target="_blank" rel="noopener">nginx.org</a>. Add this server block to <span class="ic">nginx.conf</span>:</p>
+      <div class="code-block"><code>http {
+  # Redirect HTTP to HTTPS
+  server {
+    listen 80;
+    server_name grafana.yourdomain.com;
+    return 301 https://$host$request_uri;
+  }
+
+  # HTTPS proxy to Grafana
+  server {
+    listen 443 ssl http2;
+    server_name grafana.yourdomain.com;
+
+    ssl_certificate     C:/nginx/ssl/grafana.crt;
+    ssl_certificate_key C:/nginx/ssl/grafana.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+    ssl_session_cache   shared:SSL:10m;
+
+    location / {
+      proxy_pass         http://localhost:3000;
+      proxy_http_version 1.1;
+      proxy_set_header   Host              $host;
+      proxy_set_header   X-Real-IP         $remote_addr;
+      proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+      proxy_set_header   X-Forwarded-Proto $scheme;
+      proxy_set_header   Upgrade           $http_upgrade;
+      proxy_set_header   Connection        "upgrade";
+      proxy_read_timeout 300s;
+    }
+  }
+}</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Update grafana.ini for HTTPS</h2>
+      <p>Tell Grafana its public URL so links, redirects and cookie settings work correctly behind the proxy.</p>
+      <div class="code-block"><code>[server]
+# The full public URL (with trailing slash)
+root_url = https://grafana.yourdomain.com/
+
+# If Grafana is on a sub-path:
+# root_url = https://yourdomain.com/grafana/
+# serve_from_sub_path = true
+
+[security]
+# Required for secure cookies over HTTPS
+cookie_secure = true
+cookie_samesite = lax</code></div>
+      <div class="code-block"><code># Restart Grafana after editing grafana.ini
+Restart-Service -Name "Grafana"</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Windows Firewall rules for HTTPS</h2>
+      <div class="code-block"><code># Allow HTTPS inbound
+New-NetFirewallRule -DisplayName "HTTPS Inbound" -Direction Inbound -Protocol TCP -LocalPort 443 -Action Allow
+
+# Allow HTTP (for Let's Encrypt challenge or redirect)
+New-NetFirewallRule -DisplayName "HTTP Inbound" -Direction Inbound -Protocol TCP -LocalPort 80 -Action Allow
+
+# Block direct access to Grafana port (force traffic through Nginx)
+New-NetFirewallRule -DisplayName "Block Grafana Direct" -Direction Inbound -Protocol TCP -LocalPort 3000 -RemoteAddress Internet -Action Block</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Test HTTPS is working</h2>
+      <div class="code-block"><code># Test HTTPS response
+Invoke-WebRequest -Uri "https://grafana.yourdomain.com" -UseBasicParsing
+
+# Check SSL certificate details
+$req = [System.Net.HttpWebRequest]::Create("https://grafana.yourdomain.com")
+$req.GetResponse() | Out-Null
+$cert = $req.ServicePoint.Certificate
+Write-Host "Issuer: $($cert.Issuer)"
+Write-Host "Expires: $($cert.GetExpirationDateString())"</code></div>
+    </div>
+
+    <div class="related-grid" style="margin-top:8px">
+      <a href="grafana-nginx-reverse-proxy.html" class="related-link"><div class="related-link-icon">🌐</div><div><strong style="display:block;margin-bottom:2px">Nginx reverse proxy guide</strong><span style="color:var(--muted);font-size:12px">Full Nginx config for Grafana</span></div></a>
+      <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Windows Firewall rules</strong><span style="color:var(--muted);font-size:12px">Open ports 80 and 443</span></div></a>
+      <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini reference</strong><span style="color:var(--muted);font-size:12px">All configuration options</span></div></a>
+      <a href="grafana-port-change.html" class="related-link"><div class="related-link-icon">🔌</div><div><strong style="display:block;margin-bottom:2px">Change port from 3000</strong><span style="color:var(--muted);font-size:12px">Move Grafana off default port</span></div></a>
     </div>
   </main>
   <footer>

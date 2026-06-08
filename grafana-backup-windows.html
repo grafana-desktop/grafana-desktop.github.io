@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>Backup & Restore Grafana on Windows — Automated PowerShell Scripts</title>
+  <meta name="description" content="Complete Grafana backup strategy for Windows. Automated PowerShell backup script, Task Scheduler setup, restore procedure and dashboard JSON export via API.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-backup-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="Backup & Restore Grafana on Windows — Automated PowerShell Scripts">
+  <meta property="og:description" content="Complete Grafana backup strategy for Windows. Automated PowerShell backup script, Task Scheduler setup, restore procedure and dashboard JSON export via API.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-backup-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,96 +297,175 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Backup &amp; Restore</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">💾 Backup</div>
+      <h1>Backup &amp; Restore Grafana on Windows</h1>
+      <p>Complete backup strategy for Grafana on Windows — what to back up, automated PowerShell scripts, scheduled Task Scheduler jobs, restore procedures and database migration guidance.</p>
     </section>
 
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
-    </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
+      <h2>What to back up</h2>
+      <p>A complete Grafana backup on Windows requires three components:</p>
+      <div class="three-col">
+        <div class="feature-item">
+          <div style="font-size:22px;margin-bottom:8px">🗄</div>
+          <h4>Data directory</h4>
+          <p><span class="ic">...\grafana\data\</span> — contains the SQLite database (grafana.db) with all dashboards, users, data sources, alerts and plugins.</p>
+        </div>
+        <div class="feature-item">
+          <div style="font-size:22px;margin-bottom:8px">📄</div>
+          <h4>Configuration file</h4>
+          <p><span class="ic">...\grafana\conf\grafana.ini</span> — all your custom settings including port, auth, SMTP and paths.</p>
+        </div>
+        <div class="feature-item">
+          <div style="font-size:22px;margin-bottom:8px">📁</div>
+          <h4>Provisioning (if used)</h4>
+          <p><span class="ic">...\grafana\conf\provisioning\</span> — dashboard JSON files and data source YAML files if you use Infrastructure as Code provisioning.</p>
+        </div>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>Manual backup (one-time)</h2>
+      <div class="code-block"><code># Stop the Grafana service (important — prevents DB corruption)
+Stop-Service -Name "Grafana" -Force
+
+# Create timestamped backup directory
+$timestamp = Get-Date -Format "yyyyMMdd-HHmm"
+$dest = "C:\Backups\Grafana\grafana-$timestamp"
+New-Item -ItemType Directory -Path $dest -Force | Out-Null
+
+# Copy data directory
+Copy-Item -Path "C:\Program Files\GrafanaLabs\grafana\data" `
+          -Destination "$dest\data" -Recurse
+
+# Copy config
+Copy-Item -Path "C:\Program Files\GrafanaLabs\grafana\conf\grafana.ini" `
+          -Destination "$dest\grafana.ini"
+
+# Copy provisioning if it exists
+$provPath = "C:\Program Files\GrafanaLabs\grafana\conf\provisioning"
+if (Test-Path $provPath) {
+    Copy-Item -Path $provPath -Destination "$dest\provisioning" -Recurse
+}
+
+# Restart service
+Start-Service -Name "Grafana"
+
+Write-Host "Backup complete: $dest"</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Automated backup script</h2>
+      <p>Save as <span class="ic">C:\Scripts\grafana-backup.ps1</span> and schedule it with Task Scheduler.</p>
+      <div class="code-block"><code>#Requires -RunAsAdministrator
+# grafana-backup.ps1 — Automated Grafana backup for Windows
+
+param(
+    [string]$GrafanaPath = "C:\Program Files\GrafanaLabs\grafana",
+    [string]$BackupRoot   = "C:\Backups\Grafana",
+    [int]   $RetainDays   = 30
+)
+
+$timestamp = Get-Date -Format "yyyyMMdd-HHmm"
+$dest = "$BackupRoot\grafana-$timestamp"
+
+try {
+    # Stop service
+    Stop-Service -Name "Grafana" -Force -ErrorAction Stop
+    Write-Host "Service stopped"
+
+    # Create backup directory
+    New-Item -ItemType Directory -Path $dest -Force | Out-Null
+
+    # Backup data directory
+    Copy-Item "$GrafanaPath\data" "$dest\data" -Recurse
+    Write-Host "Data directory backed up"
+
+    # Backup config
+    Copy-Item "$GrafanaPath\conf\grafana.ini" "$dest\grafana.ini"
+
+    # Backup provisioning
+    if (Test-Path "$GrafanaPath\conf\provisioning") {
+        Copy-Item "$GrafanaPath\conf\provisioning" "$dest\provisioning" -Recurse
+    }
+
+    # Compress backup
+    Compress-Archive -Path $dest -DestinationPath "$dest.zip" -Force
+    Remove-Item $dest -Recurse -Force
+    Write-Host "Backup compressed: $dest.zip"
+
+    # Remove old backups
+    Get-ChildItem $BackupRoot -Filter "*.zip" |
+        Where-Object { $_.CreationTime -lt (Get-Date).AddDays(-$RetainDays) } |
+        Remove-Item -Force
+    Write-Host "Old backups cleaned up"
+
+} finally {
+    # Always restart service
+    Start-Service -Name "Grafana"
+    Write-Host "Service restarted"
+}</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Schedule with Windows Task Scheduler</h2>
+      <div class="code-block"><code># Register a daily backup task at 2:00 AM
+$action = New-ScheduledTaskAction `
+    -Execute "powershell.exe" `
+    -Argument "-NonInteractive -ExecutionPolicy Bypass -File C:\Scripts\grafana-backup.ps1"
+
+$trigger = New-ScheduledTaskTrigger -Daily -At "02:00"
+
+$principal = New-ScheduledTaskPrincipal `
+    -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+
+Register-ScheduledTask `
+    -TaskName "Grafana Daily Backup" `
+    -Action $action `
+    -Trigger $trigger `
+    -Principal $principal `
+    -Description "Daily Grafana backup"</code></div>
+    </div>
+
+    <div class="card">
+      <h2>Restore procedure</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Stop the service</h4><div class="code-block"><code>Stop-Service -Name "Grafana" -Force</code></div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Extract the backup</h4><div class="code-block"><code>Expand-Archive -Path "C:\Backups\Grafana\grafana-20260608-0200.zip" -DestinationPath "C:\Restore" -Force</code></div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Restore data directory</h4><div class="code-block"><code>Remove-Item "C:\Program Files\GrafanaLabs\grafana\data" -Recurse -Force
+Copy-Item "C:\Restore\grafana-20260608-0200\data" `
+    "C:\Program Files\GrafanaLabs\grafana\data" -Recurse</code></div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Restore config</h4><div class="code-block"><code>Copy-Item "C:\Restore\grafana-20260608-0200\grafana.ini" `
+    "C:\Program Files\GrafanaLabs\grafana\conf\grafana.ini"</code></div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Start the service and verify</h4><div class="code-block"><code>Start-Service -Name "Grafana"
+Start-Sleep 5
+Invoke-WebRequest "http://localhost:3000" -UseBasicParsing</code></div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Export dashboards as JSON (lightweight backup)</h2>
+      <p>For dashboard-only backups without stopping the service, export dashboards via the Grafana API:</p>
+      <div class="code-block"><code># Export all dashboards via API
+$headers = @{ Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("admin:admin")) }
+$dashboards = (Invoke-RestMethod "http://localhost:3000/api/search?type=dash-db" -Headers $headers)
+
+foreach ($dash in $dashboards) {
+    $uid = $dash.uid
+    $title = $dash.title -replace '[\/:*?"<>|]', '_'
+    $json = Invoke-RestMethod "http://localhost:3000/api/dashboards/uid/$uid" -Headers $headers
+    $json | ConvertTo-Json -Depth 20 | Out-File "C:\Backups\Dashboards\$title.json"
+}
+Write-Host "Exported $($dashboards.Count) dashboards"</code></div>
+    </div>
+
+    <div class="related-grid" style="margin-top:8px">
+      <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback</strong><span style="color:var(--muted);font-size:12px">Pre-upgrade backup strategy</span></div></a>
+      <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Service management</strong><span style="color:var(--muted);font-size:12px">Start/stop Grafana service</span></div></a>
+      <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini config</strong><span style="color:var(--muted);font-size:12px">Custom paths configuration</span></div></a>
+      <a href="grafana-uninstall-windows.html" class="related-link"><div class="related-link-icon">🗑</div><div><strong style="display:block;margin-bottom:2px">Uninstall Grafana</strong><span style="color:var(--muted);font-size:12px">Clean removal guide</span></div></a>
     </div>
   </main>
   <footer>

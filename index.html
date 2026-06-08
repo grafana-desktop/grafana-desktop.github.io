@@ -3,454 +3,516 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0b6cff">
-
-  <title>Grafana for Windows — Download MSI, Install as Service, Promtail & Windows Logs</title>
-  <meta name="description" content="Download Grafana for Windows (x64 MSI). Guides: install as Windows Service, upgrade & rollback, configure Windows Firewall, run Promtail for Windows logs, and fix common errors.">
+  <meta name="theme-color" content="#f46800">
+  <title>Grafana for Windows — MSI Installer, Service Setup & Guides</title>
+  <meta name="description" content="Download Grafana for Windows (x64 MSI). Step-by-step guides: install as Windows Service, configure firewall, run Promtail for Windows logs, HTTPS setup, common errors and more.">
   <meta name="robots" content="index,follow">
+  <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
   <link rel="canonical" href="https://grafana-desktop.github.io/">
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-  <meta name="google-site-verification" content="tL_QtReHt82igiJPCjybSn1FrnqkvDu71Fpo-bxknUA" />
-  <!-- Open Graph / Social -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Grafana for Windows — Download MSI & Guides">
-  <meta property="og:description" content="Download Grafana for Windows (MSI). Guides for service install, firewall, Promtail and troubleshooting.">
+  <meta property="og:title" content="Grafana for Windows — MSI Installer, Service Setup & Guides">
+  <meta property="og:description" content="Download Grafana for Windows (x64 MSI). Step-by-step guides: install as Windows Service, configure firewall, run Promtail for Windows logs, HTTPS setup, common errors and more.">
   <meta property="og:url" content="https://grafana-desktop.github.io/">
   <meta property="og:site_name" content="Grafana Desktop">
-  <meta property="og:image" content="og-grafana-windows.png">
-  <meta property="article:modified_time" content="2026-04-30T16:09:59Z">
-  <meta property="og:updated_time" content="2026-04-30T16:09:59Z">
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.svg">
-
-  <!-- JSON-LD: Organization (concise) -->
+  <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Grafana Desktop",
-    "url": "https://grafana-desktop.github.io/",
-    "logo": "https://grafana-desktop.github.io/assets/logo.png",
-    "sameAs": [
-      "https://github.com/grafana/grafana",
-      "https://github.com/grafana/agent"
-    ]
-  }
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"WebPage","url":"https://grafana-desktop.github.io/","name":"Grafana for Windows — MSI Installer & Guides","dateModified":"2026-06-08T10:00:00Z"},
+    {"@type":"SoftwareApplication","name":"Grafana for Windows","applicationCategory":"MonitoringApplication","operatingSystem":"Windows 10, Windows 11, Windows Server 2016+","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://grafana.com/grafana/download?platform=windows","publisher":{"@type":"Organization","name":"Grafana Labs","url":"https://grafana.com"}},
+    {"@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"Is Grafana for Windows free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Grafana OSS is free to download and use. The MSI installer is provided by Grafana Labs."}},
+      {"@type":"Question","name":"Does the MSI install Grafana as a Windows service?","acceptedAnswer":{"@type":"Answer","text":"Yes. After running the MSI you can configure Grafana to start automatically as a Windows Service."}},
+      {"@type":"Question","name":"Which Windows versions are supported?","acceptedAnswer":{"@type":"Answer","text":"Windows 10, Windows 11 and Windows Server 2016 or newer (x64)."}}
+    ]}
+  ]}
   </script>
-
-  <!-- JSON-LD: SoftwareApplication -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Grafana for Windows",
-    "alternateName": "Grafana OSS (Windows x64 MSI)",
-    "applicationCategory": "MonitoringApplication",
-    "operatingSystem": "Windows 10/11; Windows Server 2016+ (x64)",
-    "softwareVersion": "latest",
-    "softwareRequirements": "Windows x64, administrative privileges for service installation",
-    "fileSize": "~200 MB",
-    "downloadUrl": "https://grafana.com/grafana/download?platform=windows",
-    "releaseNotes": "https://grafana.com/docs/grafana/latest/release-notes/",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Grafana Labs",
-      "url": "https://grafana.com/"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "url": "https://grafana.com/grafana/download?platform=windows"
-    },
-    "url": "https://grafana-desktop.github.io/"
-  }
-  </script>
-
-  <!-- JSON-LD: WebPage + Breadcrumbs + Last modified -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Grafana for Windows — Download MSI",
-    "url": "https://grafana-desktop.github.io/",
-    "dateModified": "2026-04-30T16:09:59Z",
-    "breadcrumb": {"@id": "https://grafana-desktop.github.io/#breadcrumb"}
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": "https://grafana-desktop.github.io/#breadcrumb",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://grafana-desktop.github.io/"},
-      {"@type": "ListItem", "position": 2, "name": "Download MSI", "item": "https://grafana-desktop.github.io/download-msi.html"}
-    ]
-  }
-  </script>
-
-  <!-- JSON-LD: FAQPage -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is Grafana for Windows free?",
-        "acceptedAnswer": {"@type": "Answer","text": "Yes. The MSI installer for Grafana OSS is free to download and use."}
-      },
-      {
-        "@type": "Question",
-        "name": "Does the MSI install Grafana as a Windows service?",
-        "acceptedAnswer": {"@type": "Answer","text": "The Windows MSI installs Grafana and can run it as a Windows service. You can manage the service using the standard Services console or PowerShell. See the Install as Service guide for details."}
-      },
-      {
-        "@type": "Question",
-        "name": "Which Windows versions are supported?",
-        "acceptedAnswer": {"@type": "Answer","text": "Windows 10/11 and Windows Server 2016+ on x64 architectures."}
-      },
-      {
-        "@type": "Question",
-        "name": "What is the default port?",
-        "acceptedAnswer": {"@type": "Answer","text": "Grafana listens on port 3000 by default. You can change it in the configuration and adjust Windows Firewall rules accordingly."}
-      },
-      {
-        "@type": "Question",
-        "name": "Where are data and logs stored?",
-        "acceptedAnswer": {"@type": "Answer","text": "Grafana keeps its data and logs under the Grafana data directory on Windows. See the docs for defaults and how to change the paths."}
-      },
-      {
-        "@type": "Question",
-        "name": "How do I uninstall Grafana on Windows?",
-        "acceptedAnswer": {"@type": "Answer","text": "Use the standard Windows Apps & Features uninstaller for Grafana. Stop the service first if needed and remove any custom firewall rules you created."}
-      },
-      {
-        "@type": "Question",
-        "name": "Can I run Grafana behind IIS or another reverse proxy?",
-        "acceptedAnswer": {"@type": "Answer","text": "Yes. You can place Grafana behind IIS, NGINX, or another proxy on Windows. Configure HTTPS and proxy headers, then update Grafana's configuration accordingly."}
-      },
-      {
-        "@type": "Question",
-        "name": "Is it safe to run Grafana as Local System?",
-        "acceptedAnswer": {"@type": "Answer","text": "For security, prefer a dedicated service account with least privileges where possible. Restrict firewall access and enforce HTTPS via a reverse proxy."}
-      }
-    ]
-  }
-  </script>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0f1724;--bg2:#0b1220;--accent:#0ea5e9;--accent2:#7dd3fc;--text:#e6eef6;--muted:#9db0c8;--link:#22d3ee;--link-hover:#a5f3fc;--max:1100px
+    :root {
+      --bg:       #111217;
+      --bg2:      #181b1f;
+      --card:     #1e2128;
+      --card2:    #22262e;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.12);
+      --text:     #d9dde8;
+      --text2:    #c2c6d0;
+      --muted:    #8d95a3;
+      --accent:   #f46800;
+      --accent2:  #ff8c3a;
+      --blue:     #3871dc;
+      --blue2:    #5a8ff5;
+      --success:  #6ccf8e;
+      --warning:  #f5a623;
+      --danger:   #e05252;
+      --orange-glow: rgba(244,104,0,0.12);
+      --blue-glow:   rgba(56,113,220,0.12);
+      --max:      1100px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color-scheme: dark;
     }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,#0a1224 0%, #0a1022 100%)}
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--blue2); text-decoration: none; }
+    a:hover { color: #93b4f8; text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    img { max-width: 100%; }
+    code, pre { font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
-    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(17,18,23,0.9);
+      backdrop-filter: blur(12px) saturate(1.4);
+      border-bottom: 1px solid var(--border2);
+    }
+    .header-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+      height: 60px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-logo {
+      width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), #ff6000);
+      display: grid; place-items: center;
+    }
+    .brand-logo svg { width: 20px; height: 20px; fill: #fff; }
+    .brand-name { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+    .brand-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
 
-    /* Global links with high contrast */
-    a{color:var(--link);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
-    a:hover{color:var(--link-hover)}
-    .btn{ text-decoration:none !important }
-    nav a{ text-decoration:none }
+    .nav-links { display: flex; gap: 2px; align-items: center; flex-wrap: wrap; }
+    .nav-links a {
+      padding: 6px 10px; border-radius: 7px;
+      color: var(--muted); font-size: 13px; font-weight: 500;
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text); background: rgba(255,255,255,.06);
+      text-decoration: none;
+    }
+    .nav-dl {
+      padding: 7px 14px; border-radius: 7px;
+      background: var(--accent); color: #fff !important;
+      font-weight: 700; font-size: 13px; margin-left: 6px;
+      transition: background .15s, transform .1s;
+    }
+    .nav-dl:hover { background: var(--accent2) !important; transform: translateY(-1px); text-decoration: none !important; }
 
-    /* Header & nav */
-    .site-header{position:sticky;top:0;z-index:10;background:rgba(6,12,24,0.8);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(255,255,255,0.12)}
-    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
-    .brand{display:flex;flex-direction:column;line-height:1}
-    .brand .logo-text{font-weight:900;letter-spacing:.2px;color:#fff;font-size:18px}
-    .brand .tagline{font-size:12px;color:#cbd5e1}
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 20px; border-radius: 8px; border: none; cursor: pointer;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      transition: background .15s, transform .1s; text-decoration: none !important;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; }
+    .btn-blue:hover { background: var(--blue2); transform: translateY(-1px); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border2);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.06); transform: translateY(-1px); color: var(--text); }
+    .btn-lg { padding: 14px 28px; font-size: 16px; border-radius: 10px; }
 
-    nav ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
-    nav a{display:inline-block;padding:9px 13px;border-radius:9px;color:#ffffff;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06)}
-    nav a:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.36)}
-    nav a:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+    /* ── PAGE HERO ── */
+    .page-hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+    .page-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--orange-glow); border: 1px solid rgba(244,104,0,.25);
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; color: var(--accent); margin-bottom: 14px;
+      font-family: "JetBrains Mono", monospace;
+    }
+    .page-hero h1 { font-size: 30px; margin: 0 0 12px; font-weight: 800; letter-spacing: -.5px; color: #fff; }
+    .page-hero p { color: var(--muted); font-size: 15px; line-height: 1.7; margin: 0; max-width: 720px; }
 
-    /* Main */
-    .hero{display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;align-items:stretch;padding:28px 0 8px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    h1{margin:0 0 12px;font-size:28px}
-    p.lead{margin:0;color:var(--muted)}
+    /* ── BREADCRUMB ── */
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 20px; padding-top: 20px; }
+    .breadcrumb a { color: var(--muted); }
+    .breadcrumb a:hover { color: var(--accent); text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
 
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-    .feature{padding:14px;border-radius:10px;background:rgba(255,255,255,0.02)}
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    }
+    .card-accent { border-left: 3px solid var(--accent); }
+    .card-blue { border-left: 3px solid var(--blue); }
+    .card h2 { font-size: 18px; margin: 0 0 12px; font-weight: 700; color: #fff; }
+    .card h3 { font-size: 14px; margin: 16px 0 6px; font-weight: 600; color: var(--text); }
+    .card p { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 0 0 10px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card ul, .card ol { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0; padding-left: 20px; }
+    .card li { margin-bottom: 4px; }
 
-    .download-box{display:flex;flex-direction:column;gap:10px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#06121f;text-decoration:none;font-weight:800}
-    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.28);color:#ffffff}
-    .btn:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+    /* ── CODE ── */
+    .code-block {
+      background: #0d1017; border: 1px solid var(--border2);
+      border-radius: 8px; padding: 14px 16px; margin: 10px 0;
+      overflow-x: auto;
+    }
+    .code-block code { font-size: 13px; color: #a9d4f5; line-height: 1.7; }
+    .ic { font-family: "JetBrains Mono", monospace; background: rgba(255,255,255,.07); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #a9d4f5; }
 
-    .small{font-size:13px;color:var(--muted)}
-    .section{margin-top:22px}
-    .section h2{margin:0 0 10px;font-size:20px}
-    .section h3{margin:14px 0 6px;font-size:16px}
-    .bullets{margin:0;padding-left:18px}
-    footer{margin:34px 0 20px;color:var(--muted);text-align:center}
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-num {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      background: var(--orange-glow); border: 1px solid rgba(244,104,0,.3);
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: 700; color: var(--accent);
+      font-family: "JetBrains Mono", monospace;
+    }
+    .step-body h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .step-body p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-    /* Last updated */
-    .last-updated{display:flex;justify-content:flex-end;color:var(--muted);font-size:12px;margin-top:6px}
+    /* ── TIPS / WARNINGS ── */
+    .tip {
+      background: rgba(108,207,142,.05); border: 1px solid rgba(108,207,142,.2);
+      border-radius: 8px; padding: 12px 14px; margin: 12px 0;
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+    }
+    .tip strong { color: var(--success); }
+    .warn {
+      background: rgba(245,166,35,.05); border: 1px solid rgba(245,166,35,.2);
+      border-radius: 8px; padding: 12px 14px; margin: 12px 0;
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+    }
+    .warn strong { color: var(--warning); }
+    .info-box {
+      background: var(--blue-glow); border: 1px solid rgba(56,113,220,.25);
+      border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .info-box p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    /* Cookie banner */
-    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:#091327;padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.7);display:none;gap:12px;align-items:center;justify-content:space-between;z-index:999}
-    .cookie-actions{display:flex;gap:10px}
+    /* ── GRID LAYOUTS ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
+    .feature-item {
+      background: rgba(255,255,255,.02); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px;
+    }
+    .feature-item h4 { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .feature-item p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-    /* Responsive */
-    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
-    @media (max-width:640px){.grid{grid-template-columns:1fr}.header-inner{flex-direction:column;align-items:flex-start;gap:8px}.last-updated{justify-content:flex-start}}
+    /* ── COMPARE TABLE ── */
+    .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .comp-table th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); }
+    .comp-table th:not(:first-child) { text-align: center; }
+    .comp-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.03); vertical-align: middle; color: var(--muted); }
+    .comp-table td:first-child { color: var(--text); font-weight: 500; }
+    .comp-table td:not(:first-child) { text-align: center; }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr:hover td { background: rgba(255,255,255,.02); }
+    .comp-table .section-row td { background: rgba(244,104,0,.05); color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 6px 12px; }
+    .yes { color: var(--success); font-size: 15px; }
+    .no  { color: var(--danger);  font-size: 15px; }
+    .partial { color: var(--warning); font-size: 13px; font-weight: 600; }
+
+    /* ── RELATED LINKS ── */
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .related-link {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.025); border: 1px solid var(--border);
+      border-radius: 9px; padding: 12px 14px; color: var(--text); font-size: 13px;
+      transition: background .15s, border-color .15s; text-decoration: none !important;
+    }
+    .related-link:hover { background: var(--orange-glow); border-color: rgba(244,104,0,.25); color: var(--text); }
+    .related-link-icon {
+      width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0;
+      background: var(--orange-glow); border: 1px solid rgba(244,104,0,.2);
+      display: grid; place-items: center; font-size: 14px;
+    }
+
+    /* ── CTA BOX ── */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(244,104,0,.1), rgba(244,104,0,.04));
+      border: 1px solid rgba(244,104,0,.25); border-radius: 14px;
+      padding: 28px; margin-bottom: 20px;
+    }
+    .cta-box h2 { font-size: 18px; margin: 0 0 8px; font-weight: 700; color: #fff; }
+    .cta-box p { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+
+    /* ── FOOTER ── */
+    footer { margin-top: 48px; padding: 28px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; gap: 24px; flex-wrap: wrap; justify-content: space-between; }
+    .footer-col { display: flex; flex-direction: column; gap: 7px; }
+    .footer-col strong { font-size: 12px; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .footer-col a { color: var(--muted); font-size: 13px; }
+    .footer-col a:hover { color: var(--accent); text-decoration: none; }
+    .footer-bottom { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted); }
+
+    /* ── COOKIE ── */
+    .cookie-banner {
+      position: fixed; left: 16px; right: 16px; bottom: 16px;
+      background: var(--card2); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; gap: 16px; align-items: center;
+      box-shadow: 0 12px 40px rgba(0,0,0,.6); z-index: 999;
+    }
+    .cookie-banner p { margin: 0; font-size: 13px; color: var(--muted); flex: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .two-col, .three-col, .feature-grid, .related-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .page-hero h1 { font-size: 22px; }
+    }
   </style>
 </head>
 <body>
-  <div class="site-header">
+  <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="ico-dl" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4 4-4M21 21H3"/></symbol>
+    <symbol id="ico-ext" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6m4-3h6v6m-11 5L21 3"/></symbol>
+    <symbol id="ico-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></symbol>
+    <symbol id="ico-warn" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></symbol>
+    <symbol id="ico-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 8v.01M11 12h1v4h1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ico-arr" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></symbol>
+    <symbol id="ico-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="ico-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" fill="none"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
+  </svg>
+  <header class="site-header">
     <div class="container header-inner">
-      <div class="brand" aria-label="Site brand">
-        <div class="logo-text">Grafana Desktop</div>
-        <div class="tagline">Windows installers & guides — MSI, Service, Promtail</div>
-      </div>
-      <nav aria-label="Main navigation">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/download-msi.html">Download MSI</a></li>
-          <li><a href="/install-service.html">Install as Service</a></li>
-          <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
-          <li><a href="/firewall.html">Windows Firewall</a></li>
-          <li><a href="/promtail-windows.html">Promtail</a></li>
-          <li><a href="/common-errors.html">Common Errors</a></li>
-          <li><a href="/privacy.html">Privacy</a></li>
-          <li><a href="/terms.html">Terms</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="last-updated">Last updated: <span id="lastUpdatedText" style="margin-left:6px">2026-04-30</span></div>
-
-    <main class="hero" role="main">
-      <section class="card">
-        <h1>Grafana for Windows — MSI installer & quick guides</h1>
-        <p class="lead">Download and install Grafana on Windows (x64), run it as a Windows Service, collect Windows logs with Promtail, and learn common troubleshooting steps. Clear, concise guides for admins and devops.</p>
-
-        <div class="grid">
-          <div class="feature">
-            <strong>MSI Download</strong>
-            <div class="small">Direct MSI for x64 Windows. One click from the official source.</div>
-          </div>
-          <div class="feature">
-            <strong>Windows Service</strong>
-            <div class="small">Install as a service for auto start and stable operation.</div>
-          </div>
-          <div class="feature">
-            <strong>Promtail</strong>
-            <div class="small">Collect Event Logs and file logs with Promtail and push to Loki.</div>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Quick start</h2>
-          <ol class="small">
-            <li>Click the download button (official MSI). The file is signed by Grafana Labs.</li>
-            <li>Run the MSI and follow the installer prompts.</li>
-            <li>To run as a service, follow the "Install as Service" guide linked in the menu.</li>
-            <li>For logs and Promtail configuration see the Promtail guide.</li>
-          </ol>
-        </div>
-
-      </section>
-
-      <aside class="card download-box" aria-label="Download box">
+      <a class="brand" href="index.html">
+        <div class="brand-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M12 2C8.5 2 6 4.5 6 7c0 1.5.6 2.8 1.5 3.8C5.5 12 4 14.2 4 17c0 3.9 3.1 7 7 7h2c3.9 0 7-3.1 7-7 0-2.8-1.5-5-3.5-6.2.9-1 1.5-2.3 1.5-3.8C18 4.5 15.5 2 12 2zm0 2c1.7 0 3 1.3 3 3 0 1-.5 1.9-1.2 2.5-.5-.1-1-.2-1.4-.2-.5 0-1 .1-1.4.2C10.5 8.9 10 8 10 7c0-1.7 1.3-3 3-3zm0 7c3.3 0 6 2.7 6 6s-2.7 6-6 6h-2c-3.3 0-6-2.7-6-6s2.7-6 6-6h2z"/></svg></div>
         <div>
-          <div class="small">Official MSI (Windows x64)</div>
-          <a id="downloadButton" class="btn" href="https://grafana.com/grafana/download?platform=windows" rel="noopener noreferrer" aria-label="Download Grafana for Windows (MSI)">
-            Download Grafana for Windows (MSI)
+          <div class="brand-name">Grafana Desktop</div>
+          <div class="brand-sub">Windows installer &amp; guides</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class='active'>Home</a>
+        <a href="download-msi.html" >Download MSI</a>
+        <a href="install-service.html" >Install as Service</a>
+        <a href="upgrade-rollback.html" >Upgrade</a>
+        <a href="firewall.html" >Firewall</a>
+        <a href="promtail-windows.html" >Promtail</a>
+        <a href="common-errors.html" >Errors</a>
+        <a href="download-msi.html" class="nav-dl">⬇ Download</a>
+      </div>
+    </div>
+  </header>
+  <main class="container" style="padding-top:0">
+
+    <!-- HERO -->
+    <section style="padding:56px 0 40px;border-bottom:1px solid var(--border);margin-bottom:36px">
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:start">
+        <div>
+          <div class="page-badge">🖥 Windows x64 · MSI Installer</div>
+          <h1 style="font-size:34px;margin:0 0 14px;font-weight:800;color:#fff;letter-spacing:-.5px">Grafana for Windows — MSI installer &amp; guides</h1>
+          <p style="color:var(--muted);font-size:16px;line-height:1.7;margin:0 0 20px">Download Grafana on Windows (x64 MSI), install as a Windows Service, collect logs with Promtail, configure firewall rules, and fix common issues — clear guides for sysadmins and DevOps.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn-primary btn-lg" href="download-msi.html">
+              <svg width="18" height="18"><use href="#ico-dl"/></svg>
+              Download Grafana MSI
+            </a>
+            <a class="btn btn-outline" href="install-service.html">Install as Service →</a>
+          </div>
+        </div>
+        <!-- DOWNLOAD SIDEBAR -->
+        <aside style="background:var(--card);border:1px solid var(--border);border-top:2px solid var(--accent);border-radius:12px;padding:22px">
+          <div style="font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:12px">Official MSI · Windows x64</div>
+          <a class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:8px" href="download-msi.html">
+            <svg width="15" height="15"><use href="#ico-dl"/></svg>
+            Download MSI — Free
           </a>
-          <a class="btn secondary" href="/download-msi.html">More download options</a>
-          <div class="small" style="margin-top:8px">File signed by Grafana Labs. Verify digital signature after download.</div>
-        </div>
-
-        <div style="margin-top:12px" class="card small">
-          <strong>Requirements</strong>
-          <div>Windows 10/11 or Windows Server 2016+ (x64). Admin rights required to install as a service.</div>
-        </div>
-      </aside>
-    </main>
-
-    <!-- CONTENT: What you get -->
-    <section class="card section">
-      <h2>What you get</h2>
-      <ul class="bullets small">
-        <li>Official Windows MSI download and integrity tips.</li>
-        <li>Short guides for Windows Service setup, port changes and basic security.</li>
-        <li>Promtail overview for Windows Event Logs and file logs to Loki.</li>
-        <li>Upgrade & rollback strategy and common troubleshooting paths.</li>
-        <li>Links to deeper topics: reverse proxy, firewall rules, and service accounts.</li>
-      </ul>
-    </section>
-
-    <!-- CONTENT: System requirements & ports -->
-    <section class="card section">
-      <h2>System requirements & default ports</h2>
-      <ul class="bullets small">
-        <li>OS: Windows 10/11 or Windows Server 2016+ (x64).</li>
-        <li>Resources: at least 1 CPU core and 1 GB RAM for small deployments (more recommended for plugins and dashboards).</li>
-        <li>Default HTTP port: 3000. Changeable in configuration.</li>
-        <li>Firewall: allow inbound on your chosen HTTP/HTTPS port for intended LAN/WAN ranges only.</li>
-      </ul>
-    </section>
-
-    <!-- CONTENT: Service (short) -->
-    <section class="card section">
-      <h2>Install as a Windows Service (short version)</h2>
-      <ol class="small">
-        <li>Install Grafana via MSI.</li>
-        <li>Open the Windows Services console and locate the Grafana service.</li>
-        <li>Set Startup type to Automatic, start the service.</li>
-        <li>Open http://localhost:3000 to verify Grafana is running.</li>
-        <li>Secure the admin account and restrict firewall scope to needed networks.</li>
-      </ol>
-      <div class="small">Full details in <a href="/install-service.html">Install as Service</a>.</div>
-    </section>
-
-    <!-- CONTENT: Promtail overview -->
-    <section class="card section">
-      <h2>Promtail on Windows (quick overview)</h2>
-      <ol class="small">
-        <li>Install Promtail for Windows.</li>
-        <li>Configure scraping for Windows Event Logs and selected log files.</li>
-        <li>Point Promtail to your Loki endpoint and verify ingestion.</li>
-        <li>Create dashboards in Grafana to explore logs and alerts.</li>
-      </ol>
-      <div class="small">See <a href="/promtail-windows.html">Promtail on Windows</a> for configuration patterns.</div>
-    </section>
-
-    <!-- CONTENT: Upgrade & rollback -->
-    <section class="card section">
-      <h2>Upgrade & rollback (safe approach)</h2>
-      <ol class="small">
-        <li>Read the release notes for breaking changes.</li>
-        <li>Back up the data directory and configuration.</li>
-        <li>Run the new MSI and follow the prompts.</li>
-        <li>If issues arise, stop the service, restore backup and consider previous MSI.</li>
-      </ol>
-      <div class="small">More in <a href="/upgrade-rollback.html">Upgrade & Rollback</a>.</div>
-    </section>
-
-    <!-- CONTENT: Verify installer -->
-    <section class="card section">
-      <h2>Verify installer integrity & signature</h2>
-      <ol class="small">
-        <li>Download the MSI from the official site.</li>
-        <li>Check the digital signature in file properties (Publisher: Grafana Labs).</li>
-        <li>Optionally, compare checksums provided by the vendor.</li>
-      </ol>
-      <div class="small">Details in <a href="/download-msi.html">Download MSI</a>.</div>
-    </section>
-
-    <!-- CONTENT: FAQ -->
-    <section class="card section" id="faq">
-      <h2>Frequently asked questions</h2>
-      <div class="small">
-        <p><strong>Is Grafana for Windows free?</strong><br>Yes, the OSS MSI is free to download and use.</p>
-        <p><strong>Does the MSI install Grafana as a Windows service?</strong><br>The MSI installs Grafana and can run it as a Windows service. Manage it via Services or PowerShell.</p>
-        <p><strong>Which Windows versions are supported?</strong><br>Windows 10/11 and Windows Server 2016+ (x64).</p>
-        <p><strong>What is the default port?</strong><br>3000. You can change the port and update firewall rules accordingly.</p>
-        <p><strong>Where are data and logs stored?</strong><br>Under the Grafana data directory. Paths can be customized in configuration.</p>
-        <p><strong>How do I uninstall?</strong><br>Use Apps & Features. Stop the service first if needed; remove custom firewall rules.</p>
-        <p><strong>Can I run behind IIS?</strong><br>Yes—configure reverse proxy (HTTPS, headers) and adjust Grafana settings.</p>
-        <p><strong>Is Local System safe?</strong><br>Prefer a dedicated, least‑privilege service account when possible.</p>
+          <a class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
+            <svg width="14" height="14"><use href="#ico-ext"/></svg>
+            Official Grafana site
+          </a>
+          <div style="font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px;line-height:1.6">
+            <div>✅ Signed by Grafana Labs</div>
+            <div>✅ Free &amp; open source (AGPL v3)</div>
+            <div>✅ Windows 10 / 11 / Server 2016+</div>
+            <div>✅ Runs as Windows Service</div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section class="card section">
-      <h2>Next steps</h2>
-      <ul class="bullets small">
-        <li><a href="/download-msi.html">Download MSI (options & integrity)</a></li>
-        <li><a href="/install-service.html">Install as Service (full guide)</a></li>
-        <li><a href="/firewall.html">Windows Firewall rules</a></li>
-        <li><a href="/promtail-windows.html">Promtail on Windows</a></li>
-        <li><a href="/common-errors.html">Common errors & troubleshooting</a></li>
-      </ul>
+    <!-- FEATURE GRID -->
+    <section style="margin-bottom:32px">
+      <h2 style="font-size:20px;margin:0 0 16px;font-weight:700;color:#fff">What's covered on this site</h2>
+      <div class="feature-grid">
+        <a href="download-msi.html" class="feature-item" style="text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(244,104,0,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px;margin-bottom:8px">📦</div>
+          <h4>Download MSI</h4>
+          <p>Verify &amp; download the official Grafana x64 MSI. Checksum tips and signature verification.</p>
+        </a>
+        <a href="install-service.html" class="feature-item" style="text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(244,104,0,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px;margin-bottom:8px">⚙️</div>
+          <h4>Install as Service</h4>
+          <p>Run Grafana as a Windows Service with auto-start. Service account, PowerShell commands.</p>
+        </a>
+        <a href="upgrade-rollback.html" class="feature-item" style="text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(244,104,0,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px;margin-bottom:8px">🔄</div>
+          <h4>Upgrade &amp; Rollback</h4>
+          <p>Safe upgrade procedure, backup strategy, and rollback if something breaks.</p>
+        </a>
+        <a href="firewall.html" class="feature-item" style="text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(244,104,0,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px;margin-bottom:8px">🔒</div>
+          <h4>Windows Firewall</h4>
+          <p>Open port 3000, restrict by IP range, HTTPS rules. PowerShell and GUI methods.</p>
+        </a>
+        <a href="promtail-windows.html" class="feature-item" style="text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(244,104,0,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px;margin-bottom:8px">📋</div>
+          <h4>Promtail on Windows</h4>
+          <p>Collect Windows Event Logs and file logs, push to Loki, visualise in Grafana.</p>
+        </a>
+        <a href="common-errors.html" class="feature-item" style="text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(244,104,0,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px;margin-bottom:8px">🛠</div>
+          <h4>Common Errors</h4>
+          <p>Service won't start, port conflicts, 502 behind proxy, login issues — all covered.</p>
+        </a>
+      </div>
     </section>
 
-    <section class="card section">
-      <h2>Legal notes & credits</h2>
-      <p class="small">This site provides community guides for installing and operating Grafana on Windows. Product names and trademarks belong to their respective owners. Always verify downloads from official sources.</p>
+    <!-- NEW GUIDES STRIP -->
+    <section class="card card-accent" style="margin-bottom:32px">
+      <h2>More guides</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">
+        <a href="grafana-https-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>HTTPS / SSL setup</a>
+        <a href="grafana-nginx-reverse-proxy.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Nginx reverse proxy</a>
+        <a href="grafana-port-change.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Change port from 3000</a>
+        <a href="grafana-config-ini-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>grafana.ini configuration</a>
+        <a href="grafana-ldap-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>LDAP / Active Directory</a>
+        <a href="grafana-alerts-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Alerts &amp; notifications</a>
+        <a href="grafana-backup-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Backup &amp; restore</a>
+        <a href="grafana-windows-exporter.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Windows Exporter</a>
+        <a href="grafana-loki-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Loki on Windows</a>
+        <a href="grafana-datasource-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Data sources guide</a>
+        <a href="grafana-dashboard-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>Dashboard guide</a>
+        <a href="grafana-influxdb-windows.html" style="font-size:13px;color:var(--muted);padding:8px 0;display:flex;align-items:center;gap:6px"><svg width="12" height="12" style="color:var(--accent)"><use href="#ico-arr"/></svg>InfluxDB on Windows</a>
+      </div>
     </section>
 
-    <footer>
-      <div>© Grafana Desktop — hosted on GitHub Pages • <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> • <a href="/sitemap.xml">Sitemap</a></div>
-    </footer>
-  </div>
+    <!-- QUICK START -->
+    <section class="card" style="margin-bottom:20px">
+      <h2>Quick start — Grafana on Windows</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Download the MSI</h4><p>Get the official Grafana x64 MSI from <a href="download-msi.html">our download page</a> or directly from <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com</a>. Verify the digital signature before running.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Run the installer</h4><p>Execute the MSI as Administrator. The installer creates the Grafana Windows Service automatically. Default install path: <span class="ic">C:\Program Files\GrafanaLabs\grafana</span>.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Configure the service</h4><p>Open <strong>Services</strong> console, set startup type to <em>Automatic</em> and start the service. See the <a href="install-service.html">Install as Service guide</a> for service account configuration.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Open Grafana UI</h4><p>Navigate to <span class="ic">http://localhost:3000</span> in your browser. Default credentials: <span class="ic">admin / admin</span>. Change the password immediately on first login.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Configure firewall &amp; HTTPS</h4><p>Add a Windows Firewall rule to allow inbound on port 3000 (or your chosen port). For production, set up <a href="grafana-https-windows.html">HTTPS via a reverse proxy</a>.</p></div></div>
+      </div>
+    </section>
 
-  <!-- Cookie banner & consent -->
-  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
-    <div>
-      <strong>Cookies</strong>
-      <div class="small">We use cookies to improve the site and to enable analytics. You can accept or decline analytics cookies.</div>
+    <!-- SYSTEM REQUIREMENTS -->
+    <section class="card" style="margin-bottom:20px">
+      <h2>System requirements</h2>
+      <div class="two-col">
+        <div>
+          <h3>Minimum</h3>
+          <ul>
+            <li>Windows 10 / 11 or Windows Server 2016+ (x64)</li>
+            <li>1 CPU core, 1 GB RAM (small deployments)</li>
+            <li>~500 MB disk space for installation</li>
+            <li>Port 3000 available (configurable)</li>
+            <li>Administrator rights for installation</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Recommended (production)</h3>
+          <ul>
+            <li>Windows Server 2019 / 2022 (x64)</li>
+            <li>2+ CPU cores, 4+ GB RAM</li>
+            <li>SSD storage for data directory</li>
+            <li>Dedicated service account (least privilege)</li>
+            <li>HTTPS via reverse proxy (Nginx or IIS)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="card" id="faq">
+      <h2>Frequently asked questions</h2>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
+        <div style="border-bottom:1px solid var(--border);padding-bottom:14px"><strong style="font-size:14px;color:var(--text)">Is Grafana for Windows free?</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Yes. Grafana OSS is free and open source (AGPL v3). The MSI installer is provided by Grafana Labs at no cost.</p></div>
+        <div style="border-bottom:1px solid var(--border);padding-bottom:14px"><strong style="font-size:14px;color:var(--text)">Does the MSI install Grafana as a Windows Service?</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Yes — the MSI creates and registers a Windows Service. You can manage it via the Services console or PowerShell. See the <a href="install-service.html">Install as Service guide</a>.</p></div>
+        <div style="border-bottom:1px solid var(--border);padding-bottom:14px"><strong style="font-size:14px;color:var(--text)">What is the default port?</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Grafana listens on port 3000 by default. You can change it in <span class="ic">grafana.ini</span> — see the <a href="grafana-port-change.html">port change guide</a>.</p></div>
+        <div style="border-bottom:1px solid var(--border);padding-bottom:14px"><strong style="font-size:14px;color:var(--text)">How do I collect Windows logs in Grafana?</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Use Promtail to scrape Windows Event Logs and forward them to Loki, then visualise in Grafana. See the <a href="promtail-windows.html">Promtail guide</a>.</p></div>
+        <div><strong style="font-size:14px;color:var(--text)">Can I run Grafana behind IIS or Nginx on Windows?</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Yes. See the <a href="grafana-nginx-reverse-proxy.html">Nginx reverse proxy guide</a> and <a href="grafana-https-windows.html">HTTPS setup guide</a>.</p></div>
+      </div>
+    </section>
+
+    <div style="font-size:12px;color:var(--muted);text-align:right;margin-bottom:16px">Last updated: <time datetime="2026-06-08T10:00:00Z">2026-06-08</time></div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-col">
+          <strong>Grafana on Windows</strong>
+          <a href="download-msi.html">Download MSI</a>
+          <a href="install-service.html">Install as Service</a>
+          <a href="upgrade-rollback.html">Upgrade &amp; Rollback</a>
+          <a href="grafana-config-ini-windows.html">grafana.ini Config</a>
+          <a href="grafana-uninstall-windows.html">Uninstall</a>
+        </div>
+        <div class="footer-col">
+          <strong>Networking</strong>
+          <a href="firewall.html">Windows Firewall</a>
+          <a href="grafana-https-windows.html">HTTPS / SSL Setup</a>
+          <a href="grafana-nginx-reverse-proxy.html">Nginx Reverse Proxy</a>
+          <a href="grafana-port-change.html">Change Port 3000</a>
+        </div>
+        <div class="footer-col">
+          <strong>Data &amp; Monitoring</strong>
+          <a href="promtail-windows.html">Promtail on Windows</a>
+          <a href="grafana-loki-windows.html">Loki + Grafana</a>
+          <a href="grafana-windows-exporter.html">Windows Exporter</a>
+          <a href="grafana-influxdb-windows.html">InfluxDB on Windows</a>
+          <a href="grafana-datasource-windows.html">Data Sources Guide</a>
+        </div>
+        <div class="footer-col">
+          <strong>More</strong>
+          <a href="common-errors.html">Common Errors</a>
+          <a href="grafana-dashboard-windows.html">Dashboard Guide</a>
+          <a href="grafana-alerts-windows.html">Alerts &amp; Notifications</a>
+          <a href="grafana-ldap-windows.html">LDAP / Active Directory</a>
+          <a href="grafana-backup-windows.html">Backup &amp; Restore</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="yr"></span> Grafana Desktop — community guides for Windows. Not affiliated with Grafana Labs.</span>
+        <span><a href="sitemap.xml">Sitemap</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+      </div>
     </div>
-    <div class="cookie-actions">
-      <button id="declineCookies" class="btn secondary">Decline</button>
-      <button id="acceptCookies" class="btn">Accept analytics</button>
+  </footer>
+
+  <div id="cookieBanner" class="cookie-banner" style="display:none">
+    <p>We use Google Analytics (GA4) for anonymous traffic analytics. Accept to enable or Decline to opt out.</p>
+    <div style="display:flex;gap:8px;flex-shrink:0">
+      <button id="btnAccept" class="btn btn-primary" style="padding:8px 14px;font-size:13px">Accept</button>
+      <button id="btnDecline" class="btn btn-outline" style="padding:8px 14px;font-size:13px">Decline</button>
     </div>
   </div>
 
   <script>
-    // Show human-readable last updated from document.lastModified
-    (function(){
-      try{
-        var el=document.getElementById('lastUpdatedText');
-        var lm=new Date(document.lastModified);
-        if(el && !isNaN(lm.getTime())){
-          var y=lm.getFullYear();
-          var m=String(lm.getMonth()+1).padStart(2,'0');
-          var d=String(lm.getDate()).padStart(2,'0');
-          el.textContent=y+'-'+m+'-'+d;
-        }
-      }catch(e){}
-    })();
-
-    // Simple cookie helpers
-    function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+ (days||365)*24*60*60*1000);document.cookie=name+"="+encodeURIComponent(value)+";path=/;expires="+d.toUTCString();}
-    function getCookie(name){var match=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return match?decodeURIComponent(match[2]):null}
-
-    // Cookie banner logic
-    (function(){
-      var consent=getCookie('gd_cookie_consent');
-      var banner=document.getElementById('cookieBanner');
-      if(!consent){banner.style.display='flex'}
-      document.getElementById('acceptCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','granted',365);banner.style.display='none';loadGtag();});
-      document.getElementById('declineCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','denied',365);banner.style.display='none';});
-      if(consent==='granted'){loadGtag()}
-    })();
-
-    // Load Google tag (gtag.js) only after consent granted.
-    function loadGtag(){
-      if(window.gtagLoaded) return; window.gtagLoaded=true;
-      var gtagId='G-VJWNBCNN12';
-      var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+gtagId;document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function _gt(){dataLayer.push(arguments)}
-      window.gtag=_gt;
-      gtag('js', new Date());
-      gtag('config', gtagId, { 'anonymize_ip': true });
-    }
-
-    // Download tracking
-    document.getElementById('downloadButton').addEventListener('click',function(){
-      try{ if(window.gtag){ gtag('event','download',{ 'event_category':'installer','event_label':'grafana-windows-msi','value':1 }); } }catch(e){}
-    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    var GA='G-VJWNBCNN12';
+    function loadGA(){if(window._gaL)return;window._gaL=1;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config',GA,{anonymize_ip:true});}
+    var cb=document.getElementById('cookieBanner');
+    var saved=localStorage.getItem('gd_consent');
+    if(saved==='granted'){loadGA();}else if(!saved){cb.style.display='flex';}
+    document.getElementById('btnAccept').onclick=function(){localStorage.setItem('gd_consent','granted');cb.style.display='none';loadGA();};
+    document.getElementById('btnDecline').onclick=function(){localStorage.setItem('gd_consent','denied');cb.style.display='none';};
   </script>
-
-  <!-- Hidden quick links for crawlers -->
-  <nav aria-label="Quick links" style="display:none">
-    <a href="/download-msi.html">Download MSI</a>
-    <a href="/install-service.html">Install as Service</a>
-    <a href="/upgrade-rollback.html">Upgrade & Rollback</a>
-    <a href="/firewall.html">Configure Windows Firewall</a>
-    <a href="/promtail-windows.html">Promtail on Windows</a>
-    <a href="/common-errors.html">Common Errors</a>
-    <a href="/terms.html">Terms</a>
-    <a href="/privacy.html">Privacy</a>
-  </nav>
 </body>
 </html>

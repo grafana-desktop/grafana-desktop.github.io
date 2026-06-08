@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>InfluxDB on Windows + Grafana — Complete Setup Guide</title>
+  <meta name="description" content="Install InfluxDB 2.x on Windows, collect metrics with Telegraf, connect to Grafana and write Flux queries. Full guide for InfluxDB as a Grafana data source on Windows.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-influxdb-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="InfluxDB on Windows + Grafana — Complete Setup Guide">
+  <meta property="og:description" content="Install InfluxDB 2.x on Windows, collect metrics with Telegraf, connect to Grafana and write Flux queries. Full guide for InfluxDB as a Grafana data source on Windows.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-influxdb-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,96 +297,122 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>InfluxDB on Windows</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">⏱ Time Series</div>
+      <h1>InfluxDB on Windows + Grafana — Full Setup Guide</h1>
+      <p>Install InfluxDB on Windows, create a database and API token, connect it to Grafana as a data source and write your first Flux queries. Covers both InfluxDB 2.x and legacy 1.x.</p>
     </section>
-
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
-    </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
-      </div>
+      <h2>Step 1 — Download and install InfluxDB on Windows</h2>
+      <div class="code-block"><code># Download InfluxDB 2.x for Windows
+$version = "2.7.11"
+$url = "https://dl.influxdata.com/influxdb/releases/influxdb2-$version-windows.zip"
+Invoke-WebRequest -Uri $url -OutFile "influxdb.zip"
+Expand-Archive -Path "influxdb.zip" -DestinationPath "C:\InfluxDB" -Force
+
+# Create data directory
+New-Item -ItemType Directory "C:\InfluxDB\data" -Force | Out-Null</code></div>
+    </div>
+    <div class="card">
+      <h2>Step 2 — Install InfluxDB as a Windows Service</h2>
+      <div class="code-block"><code># Register the service
+sc.exe create InfluxDB `
+  binPath= "C:\InfluxDB\influxd.exe" `
+  start= auto `
+  DisplayName= "InfluxDB"
+
+# Start InfluxDB
+Start-Service -Name "InfluxDB"
+
+# Verify it is running
+Invoke-WebRequest "http://localhost:8086/ping" -UseBasicParsing</code></div>
+    </div>
+    <div class="card">
+      <h2>Step 3 — Initial setup</h2>
+      <p>Open <span class="ic">http://localhost:8086</span> in your browser. Complete the setup wizard:</p>
+      <ul>
+        <li>Create an admin username and password</li>
+        <li>Enter an organisation name (e.g. <span class="ic">my-org</span>)</li>
+        <li>Create an initial bucket (e.g. <span class="ic">metrics</span>)</li>
+        <li>Copy the generated API token &mdash; you will need it for Grafana and Telegraf</li>
+      </ul>
+      <div class="code-block"><code># Or set up via CLI
+C:\InfluxDB\influx.exe setup `
+  --username admin `
+  --password StrongPassword! `
+  --org my-org `
+  --bucket metrics `
+  --retention 30d `
+  --force</code></div>
+    </div>
+    <div class="card">
+      <h2>Step 4 — Collect Windows metrics with Telegraf</h2>
+      <p>Telegraf is the official metrics agent for InfluxDB. It collects Windows performance counters and sends them to InfluxDB.</p>
+      <div class="code-block"><code># Download Telegraf for Windows
+$tUrl = "https://dl.influxdata.com/telegraf/releases/telegraf-1.32.0_windows_amd64.zip"
+Invoke-WebRequest -Uri $tUrl -OutFile "telegraf.zip"
+Expand-Archive -Path "telegraf.zip" -DestinationPath "C:\Telegraf" -Force</code></div>
+      <p>Create <span class="ic">C:\Telegraf\telegraf.conf</span>:</p>
+      <div class="code-block"><code>[agent]
+  interval = "10s"
+  flush_interval = "10s"
+
+[[outputs.influxdb_v2]]
+  urls = ["http://localhost:8086"]
+  token = "YOUR_INFLUXDB_API_TOKEN"
+  organization = "my-org"
+  bucket = "metrics"
+
+# Windows CPU
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Processor"
+    Instances = ["_Total"]
+    Counters = ["% Processor Time", "% Idle Time"]
+    Measurement = "win_cpu"
+
+# Windows Memory
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Memory"
+    Counters = ["Available Bytes", "% Committed Bytes In Use"]
+    Measurement = "win_mem"</code></div>
+      <div class="code-block"><code># Install Telegraf as a service
+C:\Telegraf\telegraf.exe --service install --config C:\Telegraf\telegraf.conf
+Start-Service -Name "telegraf"</code></div>
+    </div>
+    <div class="card">
+      <h2>Step 5 — Connect InfluxDB to Grafana</h2>
+      <p>In Grafana go to <strong>Connections &rarr; Data sources &rarr; Add new &rarr; InfluxDB</strong>:</p>
+      <div class="code-block"><code>Query language: Flux
+URL:           http://localhost:8086
+Organisation:  my-org
+Token:         YOUR_INFLUXDB_API_TOKEN
+Default bucket: metrics</code></div>
+      <p>Click <strong>Save &amp; test</strong>. Then explore data in <strong>Grafana &rarr; Explore</strong> with a Flux query:</p>
+      <div class="code-block"><code>from(bucket: "metrics")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r._measurement == "win_cpu")
+  |> filter(fn: (r) => r._field == "% Processor Time")</code></div>
+    </div>
+    <div class="card">
+      <h2>Firewall rules for InfluxDB</h2>
+      <div class="code-block"><code># Allow Grafana and Telegraf to reach InfluxDB
+New-NetFirewallRule `
+  -DisplayName "InfluxDB API" `
+  -Direction Inbound `
+  -Protocol TCP `
+  -LocalPort 8086 `
+  -RemoteAddress 127.0.0.1 `
+  -Action Allow</code></div>
+      <div class="tip"><strong>Security:</strong> For local-only use, restrict InfluxDB to localhost (<span class="ic">127.0.0.1</span>) and block external access to port 8086.</div>
+    </div>
+    <div class="related-grid" style="margin-top:8px">
+      <a href="grafana-datasource-windows.html" class="related-link"><div class="related-link-icon">🔌</div><div><strong style="display:block;margin-bottom:2px">All data sources</strong><span style="color:var(--muted);font-size:12px">Prometheus, SQL and more</span></div></a>
+      <a href="grafana-dashboard-windows.html" class="related-link"><div class="related-link-icon">📊</div><div><strong style="display:block;margin-bottom:2px">Dashboard guide</strong><span style="color:var(--muted);font-size:12px">Build InfluxDB dashboards</span></div></a>
+      <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Firewall rules</strong><span style="color:var(--muted);font-size:12px">Open port 8086</span></div></a>
+      <a href="grafana-alerts-windows.html" class="related-link"><div class="related-link-icon">🔔</div><div><strong style="display:block;margin-bottom:2px">Set up alerts</strong><span style="color:var(--muted);font-size:12px">Alert on InfluxDB metrics</span></div></a>
     </div>
   </main>
   <footer>

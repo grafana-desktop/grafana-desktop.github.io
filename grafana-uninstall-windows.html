@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>Uninstall Grafana from Windows — Complete Removal Guide</title>
+  <meta name="description" content="Fully uninstall Grafana from Windows 10, 11 and Server. GUI uninstall, silent MSI removal, delete leftover files, remove Windows Service registration and firewall rules.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-uninstall-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="Uninstall Grafana from Windows — Complete Removal Guide">
+  <meta property="og:description" content="Fully uninstall Grafana from Windows 10, 11 and Server. GUI uninstall, silent MSI removal, delete leftover files, remove Windows Service registration and firewall rules.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-uninstall-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,95 +297,114 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Uninstall</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">🗑 Removal</div>
+      <h1>Uninstall Grafana from Windows — Complete Removal Guide</h1>
+      <p>Fully remove Grafana from Windows 10, 11 or Server. Covers uninstalling via Apps &amp; Features, silent uninstall, stopping and removing the Windows Service, cleaning up leftover files and registry entries.</p>
     </section>
-
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
+    <div class="card card-accent">
+      <h2>Before you uninstall — back up your data</h2>
+      <p>The uninstaller removes Grafana but may leave the data directory intact depending on the installer version. To be safe, back up dashboards and configuration before proceeding:</p>
+      <div class="code-block"><code># Back up Grafana data directory before uninstalling
+$dest = "C:\Backups\Grafana-final-backup-$(Get-Date -Format yyyyMMdd)"
+Copy-Item "C:\Program Files\GrafanaLabs\grafana\data" $dest -Recurse
+Copy-Item "C:\Program Files\GrafanaLabs\grafana\conf\grafana.ini" $dest
+Write-Host "Backup saved to $dest"</code></div>
+      <div class="tip"><strong>Tip:</strong> Export individual dashboards as JSON from Grafana UI before uninstalling: <strong>Dashboard &rarr; Share &rarr; Export &rarr; Save to file</strong>.</div>
     </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
+      <h2>Method 1 — Uninstall via Windows Apps &amp; Features (GUI)</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Stop the Grafana service</h4><p>Open <span class="ic">services.msc</span>, find <strong>Grafana</strong>, right-click &rarr; Stop. Or run: <span class="ic">Stop-Service -Name "Grafana"</span></p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Open Apps &amp; Features</h4><p>Press <strong>Win + I</strong> &rarr; Apps &rarr; Apps &amp; features. Search for <em>Grafana</em>.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Uninstall</h4><p>Click <strong>Grafana</strong> &rarr; <strong>Uninstall</strong> &rarr; confirm. The uninstaller removes the program files and the Windows Service registration.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Clean up remaining files</h4><p>The MSI uninstaller typically leaves the data directory. Remove it manually if you want a clean slate (see below).</p></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Method 2 — Silent uninstall via PowerShell</h2>
+      <div class="code-block"><code># Stop the service first
+Stop-Service -Name "Grafana" -Force -ErrorAction SilentlyContinue
+
+# Find the Grafana MSI product code
+$grafana = Get-WmiObject -Class Win32_Product |
+    Where-Object { $_.Name -like "*Grafana*" }
+
+if ($grafana) {
+    Write-Host "Found: $($grafana.Name) $($grafana.Version)"
+    # Silent uninstall using product code
+    $exitCode = (Start-Process msiexec.exe `
+        -ArgumentList "/x $($grafana.IdentifyingNumber) /quiet /norestart" `
+        -Wait -PassThru).ExitCode
+    Write-Host "Uninstall exit code: $exitCode"
+} else {
+    Write-Host "Grafana MSI not found in installed programs"
+}</code></div>
+    </div>
+    <div class="card">
+      <h2>Remove leftover files and directories</h2>
+      <p>After uninstalling, check and remove any remaining Grafana files:</p>
+      <div class="code-block"><code># Remove Grafana installation directory (if still present)
+$installDir = "C:\Program Files\GrafanaLabs"
+if (Test-Path $installDir) {
+    Remove-Item $installDir -Recurse -Force
+    Write-Host "Removed $installDir"
+}
+
+# Remove Grafana data directory (contains your dashboards!)
+# Only do this if you have a backup
+$dataDir = "C:\ProgramData\Grafana"
+if (Test-Path $dataDir) {
+    Remove-Item $dataDir -Recurse -Force
+}
+
+# Remove Grafana AppData for current user
+$appData = "$env:APPDATA\Grafana"
+if (Test-Path $appData) {
+    Remove-Item $appData -Recurse -Force
+}</code></div>
+    </div>
+    <div class="card">
+      <h2>Remove the Windows Service (if still registered)</h2>
+      <p>If the service entry persists after uninstalling:</p>
+      <div class="code-block"><code># Check if service still exists
+Get-Service -Name "Grafana" -ErrorAction SilentlyContinue
+
+# Remove the service
+sc.exe delete "Grafana"
+
+# Or using PowerShell 6+
+(Get-Service -Name "Grafana").Delete()</code></div>
+    </div>
+    <div class="card">
+      <h2>Remove Windows Firewall rules</h2>
+      <div class="code-block"><code># List Grafana firewall rules
+Get-NetFirewallRule | Where-Object { $_.DisplayName -like "*Grafana*" }
+
+# Remove all Grafana firewall rules
+Get-NetFirewallRule | Where-Object { $_.DisplayName -like "*Grafana*" } | Remove-NetFirewallRule</code></div>
+    </div>
+    <div class="card">
+      <h2>Verify complete removal</h2>
+      <div class="code-block"><code># Confirm service is gone
+Get-Service -Name "Grafana" -ErrorAction SilentlyContinue
+# Should return nothing
+
+# Confirm port 3000 is free
+netstat -ano | findstr ":3000"
+# Should return nothing
+
+# Confirm install directory is removed
+Test-Path "C:\Program Files\GrafanaLabs"
+# Should return False</code></div>
+    </div>
+    <div class="cta-box">
+      <h2>Reinstalling Grafana?</h2>
+      <p>Download the latest MSI and follow the installation guide to get Grafana running again.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="download-msi.html">Download MSI &rarr;</a>
+        <a class="btn btn-outline" href="install-service.html">Install as Service</a>
       </div>
     </div>
   </main>

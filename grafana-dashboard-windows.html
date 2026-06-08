@@ -4,30 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f46800">
-  <title>Download Grafana MSI for Windows — x64 Installer Guide</title>
-  <meta name="description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
+  <title>Grafana Dashboard Guide for Windows — Create, Import & Provision</title>
+  <meta name="description" content="Create and import Grafana dashboards on Windows. Panel types, template variables, provisioning as code, sharing options and top community dashboard IDs for Windows monitoring.">
   <meta name="robots" content="index,follow">
   <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
-  <link rel="canonical" href="https://grafana-desktop.github.io/download-msi.html">
+  <link rel="canonical" href="https://grafana-desktop.github.io/grafana-dashboard-windows.html">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download Grafana MSI for Windows — x64 Installer Guide">
-  <meta property="og:description" content="Download the official Grafana MSI for Windows 10, 11 and Server (x64). Verify digital signature and SHA-256 checksum. Step-by-step download and installation guide.">
-  <meta property="og:url" content="https://grafana-desktop.github.io/download-msi.html">
+  <meta property="og:title" content="Grafana Dashboard Guide for Windows — Create, Import & Provision">
+  <meta property="og:description" content="Create and import Grafana dashboards on Windows. Panel types, template variables, provisioning as code, sharing options and top community dashboard IDs for Windows monitoring.">
+  <meta property="og:url" content="https://grafana-desktop.github.io/grafana-dashboard-windows.html">
   <meta property="og:site_name" content="Grafana Desktop">
   <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebPage","url":"https://grafana-desktop.github.io/download-msi.html","name":"Download Grafana MSI for Windows","dateModified":"2026-06-08T10:00:00Z"},
-    {"@type":"HowTo","name":"How to Download and Verify Grafana MSI for Windows","step":[
-      {"@type":"HowToStep","name":"Go to official download page","text":"Visit grafana.com/grafana/download and select Windows platform."},
-      {"@type":"HowToStep","name":"Choose OSS edition","text":"Select Grafana OSS (free) and the MSI package type."},
-      {"@type":"HowToStep","name":"Download and verify","text":"Download the .msi file and check the digital signature in file Properties."},
-      {"@type":"HowToStep","name":"Run installer","text":"Execute the MSI as Administrator and follow the setup wizard."}
-    ]}
-  ]}
-  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -296,7 +286,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html" >Home</a>
-        <a href="download-msi.html" class='active'>Download MSI</a>
+        <a href="download-msi.html" >Download MSI</a>
         <a href="install-service.html" >Install as Service</a>
         <a href="upgrade-rollback.html" >Upgrade</a>
         <a href="firewall.html" >Firewall</a>
@@ -307,96 +297,78 @@
     </div>
   </header>
   <main class="container" style="padding-top:0">
-    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Download MSI</div>
-
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Dashboard Guide</div>
     <section class="page-hero">
-      <div class="page-badge">📦 Download</div>
-      <h1>Download Grafana MSI for Windows (x64)</h1>
-      <p>Official Grafana MSI installer for Windows 10, Windows 11 and Windows Server (x64). Free, open source and digitally signed by Grafana Labs. Includes tips for verifying the installer before running.</p>
+      <div class="page-badge">📊 Dashboards</div>
+      <h1>Grafana Dashboard Guide for Windows</h1>
+      <p>Create, import and manage Grafana dashboards on Windows. Covers panel types, variables, time ranges, provisioning dashboards as code and sharing with your team.</p>
     </section>
-
-    <!-- MAIN DOWNLOAD BLOCK -->
-    <div style="background:linear-gradient(135deg,rgba(244,104,0,.1),rgba(244,104,0,.04));border:1px solid rgba(244,104,0,.25);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h2 style="font-size:22px;margin:0 0 8px;font-weight:800;color:#fff">Grafana OSS — Latest Release</h2>
-        <p style="color:var(--muted);font-size:14px;margin:0 0 14px">The official Windows x64 MSI from Grafana Labs. Always download from the official source.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">
-          <span>📋 .msi · Windows x64</span>
-          <span>🆓 Free (AGPL v3)</span>
-          <span>✅ Signed by Grafana Labs</span>
-          <span>~200 MB</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">After downloading, verify the digital signature in file Properties → Digital Signatures tab. Publisher should read <strong style="color:var(--text)">Grafana Labs</strong>.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
-        <a class="btn btn-primary btn-lg" href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">
-          <svg width="17" height="17"><use href="#ico-dl"/></svg>
-          Download from grafana.com
-        </a>
-        <a class="btn btn-outline" href="https://github.com/grafana/grafana/releases" target="_blank" rel="noopener">
-          <svg width="14" height="14"><use href="#ico-ext"/></svg>
-          GitHub Releases (all versions)
-        </a>
-        <div style="font-size:12px;color:var(--muted);text-align:center">Official sources only — always verify signature</div>
-      </div>
-    </div>
-
-    <!-- HOW TO DOWNLOAD -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Step-by-step: download &amp; verify</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Go to the official download page</h4><p>Visit <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. Select <strong>Windows</strong> as the platform. Choose <strong>Grafana OSS</strong> (free edition) unless you need Enterprise features.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Select MSI package</h4><p>Under <em>Package</em>, select <strong>Windows MSI</strong>. The filename will be similar to <span class="ic">grafana-&lt;version&gt;.windows-amd64.msi</span>. The x64 build is the only supported architecture.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Verify the digital signature</h4><p>Right-click the downloaded <span class="ic">.msi</span> → <strong>Properties → Digital Signatures</strong>. The signer name must read <strong>Grafana Labs</strong>. If it's blank or shows a different publisher, do not proceed — re-download from the official site.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Run as Administrator</h4><p>Right-click the MSI → <strong>Run as administrator</strong>. Follow the setup wizard. The default install path is <span class="ic">C:\Program Files\GrafanaLabs\grafana</span> — this is fine for most deployments.</p></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Access Grafana</h4><p>After installation, open <span class="ic">http://localhost:3000</span> in your browser. Log in with <span class="ic">admin / admin</span> and <strong>immediately change the default password</strong>.</p></div></div>
-      </div>
-    </div>
-
-    <!-- VERIFY CHECKSUM -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Verify checksum with PowerShell</h2>
-      <p>For extra assurance, compare the SHA-256 hash of the downloaded file against the value shown on the Grafana download page.</p>
-      <div class="code-block">
-        <code># Replace with your actual filename
-Get-FileHash "grafana-11.6.0.windows-amd64.msi" -Algorithm SHA256</code>
-      </div>
-      <p>The output hash must match the checksum listed on <a href="https://grafana.com/grafana/download?platform=windows" target="_blank" rel="noopener">grafana.com/grafana/download</a>. If they differ, delete the file and download again.</p>
-      <div class="tip"><strong>Tip:</strong> Grafana publishes SHA256 checksums on the download page next to each installer. Always check this for production deployments.</div>
-    </div>
-
-    <!-- EDITIONS -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>Grafana editions</h2>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>Feature</th><th>OSS (Free)</th><th>Enterprise</th></tr></thead>
-          <tbody>
-            <tr><td>Core dashboards &amp; visualisations</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>All data source plugins</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Alerting &amp; notifications</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>LDAP / Active Directory</td><td><span class="partial">Basic</span></td><td><span class="yes">✓ Advanced</span></td></tr>
-            <tr><td>Data source permissions</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Reporting (PDF export)</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Enhanced SAML/OIDC</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-            <tr><td>Cost</td><td><strong style="color:var(--success)">Free</strong></td><td>Paid</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:12px">For most Windows deployments, <strong>Grafana OSS</strong> covers everything you need. Enterprise is for large organisations needing advanced auth, permissions and reporting.</p>
-    </div>
-
-    <!-- NEXT STEPS -->
     <div class="card">
-      <h2>After downloading — next steps</h2>
-      <div class="related-grid">
-        <a href="install-service.html" class="related-link"><div class="related-link-icon">⚙️</div><div><strong style="display:block;margin-bottom:2px">Install as Windows Service</strong><span style="color:var(--muted);font-size:12px">Auto-start, service account setup</span></div></a>
-        <a href="firewall.html" class="related-link"><div class="related-link-icon">🔒</div><div><strong style="display:block;margin-bottom:2px">Configure Windows Firewall</strong><span style="color:var(--muted);font-size:12px">Allow port 3000, IP restrictions</span></div></a>
-        <a href="grafana-config-ini-windows.html" class="related-link"><div class="related-link-icon">📄</div><div><strong style="display:block;margin-bottom:2px">grafana.ini configuration</strong><span style="color:var(--muted);font-size:12px">Port, paths, auth settings</span></div></a>
-        <a href="grafana-https-windows.html" class="related-link"><div class="related-link-icon">🔐</div><div><strong style="display:block;margin-bottom:2px">Set up HTTPS on Windows</strong><span style="color:var(--muted);font-size:12px">Nginx reverse proxy + SSL</span></div></a>
-        <a href="common-errors.html" class="related-link"><div class="related-link-icon">🛠</div><div><strong style="display:block;margin-bottom:2px">Common errors &amp; fixes</strong><span style="color:var(--muted);font-size:12px">Service fails, port conflicts</span></div></a>
-        <a href="upgrade-rollback.html" class="related-link"><div class="related-link-icon">🔄</div><div><strong style="display:block;margin-bottom:2px">Upgrade &amp; rollback guide</strong><span style="color:var(--muted);font-size:12px">Safe update procedure</span></div></a>
+      <h2>Create your first dashboard</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Open Dashboards</h4><p>Go to <strong>Dashboards &rarr; New &rarr; New dashboard</strong>.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Add a panel</h4><p>Click <strong>Add visualization</strong>. Select your data source.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Write a query</h4><p>For Prometheus: <span class="ic">rate(windows_cpu_time_total[5m])</span>. For InfluxDB use the query builder. Click <strong>Run query</strong> to preview.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Choose panel type</h4><p>Select <em>Time series</em> for metrics over time, <em>Stat</em> for single values, <em>Table</em> for tabular data, <em>Gauge</em> for progress indicators.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Save the dashboard</h4><p>Press <strong>Ctrl+S</strong> or click the save icon. Give it a name and folder.</p></div></div>
       </div>
+    </div>
+    <div class="card">
+      <h2>Import community dashboards</h2>
+      <p>The Grafana community publishes thousands of ready-made dashboards at <a href="https://grafana.com/grafana/dashboards/" target="_blank" rel="noopener">grafana.com/grafana/dashboards</a>. Import by ID in seconds.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Dashboards &rarr; New &rarr; Import</h4><p>Open the Import dialog.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Enter a dashboard ID</h4><p>Popular IDs for Windows: <strong>14694</strong> (Windows Exporter Full), <strong>10467</strong> (Windows Node), <strong>1860</strong> (Node Exporter Full).</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Select data source &amp; Import</h4><p>Map the data source variable to your Prometheus or InfluxDB connection and click <strong>Import</strong>.</p></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Dashboard variables (template variables)</h2>
+      <p>Variables make dashboards dynamic &mdash; e.g. a dropdown to switch between servers or environments.</p>
+      <div class="code-block"><code># Example: variable to select a Windows host
+Name:  instance
+Type:  Query
+Query: label_values(windows_os_info, instance)
+
+# Use in panel queries:
+windows_cpu_time_total{instance="$instance"}</code></div>
+      <p>Add variables via <strong>Dashboard settings (gear icon) &rarr; Variables &rarr; New variable</strong>.</p>
+    </div>
+    <div class="card">
+      <h2>Useful panel types</h2>
+      <div class="feature-grid">
+        <div class="feature-item"><h4>📈 Time series</h4><p>Line or bar chart over time. Best for CPU, memory, network trends.</p></div>
+        <div class="feature-item"><h4>🔢 Stat</h4><p>Single large number with optional sparkline. Good for current CPU %, uptime.</p></div>
+        <div class="feature-item"><h4>📋 Table</h4><p>Tabular data from SQL queries or metric labels. Good for service states.</p></div>
+        <div class="feature-item"><h4>🌡 Gauge</h4><p>Radial or bar gauge for values with min/max. Disk usage, memory %.</p></div>
+        <div class="feature-item"><h4>📜 Logs</h4><p>Display log streams from Loki. Shows log lines with level filtering.</p></div>
+        <div class="feature-item"><h4>🔔 Alert list</h4><p>Shows active alerts and their states from Grafana Alerting.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Provision dashboards as code</h2>
+      <p>Store dashboards as JSON files and provision them automatically &mdash; great for version control and repeatable deployments.</p>
+      <p>Create <span class="ic">C:\Program Files\GrafanaLabs\grafana\conf\provisioning\dashboards\windows.yaml</span>:</p>
+      <div class="code-block"><code>apiVersion: 1
+providers:
+  - name: Windows Dashboards
+    folder: Windows
+    type: file
+    options:
+      path: C:\Program Files\GrafanaLabs\grafana\conf\dashboards</code></div>
+      <p>Export any dashboard as JSON from <strong>Dashboard settings &rarr; JSON model</strong> and save it to the <span class="ic">dashboards</span> folder. Grafana loads it automatically on restart.</p>
+    </div>
+    <div class="card">
+      <h2>Share and export dashboards</h2>
+      <h3>Share link</h3><p>Click the share icon on any dashboard to get a direct URL. Toggle <em>Lock time range</em> to share a snapshot at a specific time.</p>
+      <h3>Export as JSON</h3><p>Dashboard settings &rarr; JSON model &rarr; Copy to clipboard or save as file. Import the JSON on another Grafana instance.</p>
+      <h3>Export as PDF (Enterprise)</h3><p>Grafana Enterprise supports PDF export for reports. OSS users can use the <em>grafana-image-renderer</em> plugin for panel PNG export.</p>
+    </div>
+    <div class="related-grid" style="margin-top:8px">
+      <a href="grafana-datasource-windows.html" class="related-link"><div class="related-link-icon">🔌</div><div><strong style="display:block;margin-bottom:2px">Data sources guide</strong><span style="color:var(--muted);font-size:12px">Connect your data</span></div></a>
+      <a href="grafana-alerts-windows.html" class="related-link"><div class="related-link-icon">🔔</div><div><strong style="display:block;margin-bottom:2px">Alerts &amp; notifications</strong><span style="color:var(--muted);font-size:12px">Alert from dashboards</span></div></a>
+      <a href="grafana-windows-exporter.html" class="related-link"><div class="related-link-icon">📈</div><div><strong style="display:block;margin-bottom:2px">Windows Exporter</strong><span style="color:var(--muted);font-size:12px">Pre-built Windows dashboards</span></div></a>
+      <a href="grafana-backup-windows.html" class="related-link"><div class="related-link-icon">💾</div><div><strong style="display:block;margin-bottom:2px">Backup dashboards</strong><span style="color:var(--muted);font-size:12px">Export and backup your work</span></div></a>
     </div>
   </main>
   <footer>

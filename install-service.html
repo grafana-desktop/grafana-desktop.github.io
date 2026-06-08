@@ -3,334 +3,471 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0b6cff">
-
-  <title>Install Grafana as a Windows Service — Setup, Accounts, Startup & Troubleshooting</title>
-  <meta name="description" content="Install Grafana as a Windows Service on Windows 10/11 and Windows Server 2016+. Step-by-step guide: service setup, startup types, service accounts, ports & firewall, logs, and troubleshooting.">
+  <meta name="theme-color" content="#f46800">
+  <title>Install Grafana as a Windows Service — Full Guide</title>
+  <meta name="description" content="How to install and configure Grafana as a Windows Service on Windows 10, 11 and Server. Service account setup, PowerShell commands, auto-start and troubleshooting.">
   <meta name="robots" content="index,follow">
+  <meta http-equiv="last-modified" content="2026-06-08T10:00:00Z">
   <link rel="canonical" href="https://grafana-desktop.github.io/install-service.html">
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-
-  <!-- Open Graph -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <link rel="icon" href="/favicon.svg">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Install Grafana as a Windows Service">
-  <meta property="og:description" content="Step-by-step guide to run Grafana as a Windows Service with best practices and fixes.">
+  <meta property="og:title" content="Install Grafana as a Windows Service — Full Guide">
+  <meta property="og:description" content="How to install and configure Grafana as a Windows Service on Windows 10, 11 and Server. Service account setup, PowerShell commands, auto-start and troubleshooting.">
   <meta property="og:url" content="https://grafana-desktop.github.io/install-service.html">
   <meta property="og:site_name" content="Grafana Desktop">
-  <meta property="og:image" content="/assets/og-grafana-windows.png">
-  <meta property="article:modified_time" content="2026-04-30T16:26:10Z">
-  <meta property="og:updated_time" content="2026-04-30T16:26:10Z">
-
-  <link rel="icon" href="/favicon.svg">
-
-  <!-- JSON-LD: WebPage + Breadcrumbs -->
+  <meta property="article:modified_time" content="2026-06-08T10:00:00Z">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Install Grafana as a Windows Service",
-    "url": "https://grafana-desktop.github.io/install-service.html",
-    "dateModified": "2026-04-30T16:26:10Z",
-    "breadcrumb": {"@id": "https://grafana-desktop.github.io/install-service.html#breadcrumb"}
-  }
+  {"@context":"https://schema.org","@type":"HowTo","name":"Install Grafana as a Windows Service","description":"How to install Grafana as a Windows Service for automatic startup on Windows 10, 11 and Server.","step":[
+    {"@type":"HowToStep","name":"Install Grafana MSI","text":"Run the Grafana MSI installer as Administrator."},
+    {"@type":"HowToStep","name":"Verify service registration","text":"Open Services console (services.msc) and confirm Grafana service is listed."},
+    {"@type":"HowToStep","name":"Set startup type","text":"Set the service startup type to Automatic so it starts with Windows."},
+    {"@type":"HowToStep","name":"Configure service account","text":"Optionally change the service to run under a dedicated least-privilege account."},
+    {"@type":"HowToStep","name":"Start the service","text":"Start the service and verify Grafana is accessible on http://localhost:3000."}
+  ],"dateModified":"2026-06-08T10:00:00Z"}
   </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": "https://grafana-desktop.github.io/install-service.html#breadcrumb",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://grafana-desktop.github.io/"},
-      {"@type": "ListItem", "position": 2, "name": "Install as Service", "item": "https://grafana-desktop.github.io/install-service.html"}
-    ]
-  }
-  </script>
-
-  <!-- JSON-LD: HowTo (service install) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "How to install Grafana as a Windows Service",
-    "totalTime": "PT10M",
-    "step": [
-      {"@type":"HowToStep","name":"Install Grafana via MSI","text":"Run the official Windows x64 MSI installer and complete setup."},
-      {"@type":"HowToStep","name":"Open Services","text":"Open the Windows Services console and locate the Grafana service."},
-      {"@type":"HowToStep","name":"Set startup to Automatic","text":"Set Startup type to Automatic and start the service."},
-      {"@type":"HowToStep","name":"Verify HTTP access","text":"Open http://localhost:3000 to confirm Grafana is running."},
-      {"@type":"HowToStep","name":"Secure and restrict","text":"Change the admin password and restrict Windows Firewall scope to necessary networks."}
-    ]
-  }
-  </script>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0f1724;--bg2:#0b1220;--accent:#0ea5e9;--accent2:#7dd3fc;--text:#e6eef6;--muted:#9db0c8;--link:#22d3ee;--link-hover:#a5f3fc;--max:1100px
+    :root {
+      --bg:       #111217;
+      --bg2:      #181b1f;
+      --card:     #1e2128;
+      --card2:    #22262e;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.12);
+      --text:     #d9dde8;
+      --text2:    #c2c6d0;
+      --muted:    #8d95a3;
+      --accent:   #f46800;
+      --accent2:  #ff8c3a;
+      --blue:     #3871dc;
+      --blue2:    #5a8ff5;
+      --success:  #6ccf8e;
+      --warning:  #f5a623;
+      --danger:   #e05252;
+      --orange-glow: rgba(244,104,0,0.12);
+      --blue-glow:   rgba(56,113,220,0.12);
+      --max:      1100px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color-scheme: dark;
     }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,#0a1224 0%, #0a1022 100%)}
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--blue2); text-decoration: none; }
+    a:hover { color: #93b4f8; text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    img { max-width: 100%; }
+    code, pre { font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
-    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(17,18,23,0.9);
+      backdrop-filter: blur(12px) saturate(1.4);
+      border-bottom: 1px solid var(--border2);
+    }
+    .header-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+      height: 60px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-logo {
+      width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), #ff6000);
+      display: grid; place-items: center;
+    }
+    .brand-logo svg { width: 20px; height: 20px; fill: #fff; }
+    .brand-name { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+    .brand-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
 
-    /* Global links */
-    a{color:var(--link);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
-    a:hover{color:var(--link-hover)}
-    .btn{ text-decoration:none !important }
-    nav a{ text-decoration:none }
+    .nav-links { display: flex; gap: 2px; align-items: center; flex-wrap: wrap; }
+    .nav-links a {
+      padding: 6px 10px; border-radius: 7px;
+      color: var(--muted); font-size: 13px; font-weight: 500;
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text); background: rgba(255,255,255,.06);
+      text-decoration: none;
+    }
+    .nav-dl {
+      padding: 7px 14px; border-radius: 7px;
+      background: var(--accent); color: #fff !important;
+      font-weight: 700; font-size: 13px; margin-left: 6px;
+      transition: background .15s, transform .1s;
+    }
+    .nav-dl:hover { background: var(--accent2) !important; transform: translateY(-1px); text-decoration: none !important; }
 
-    /* Header & nav */
-    .site-header{position:sticky;top:0;z-index:10;background:rgba(6,12,24,0.8);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(255,255,255,0.12)}
-    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
-    .brand{display:flex;flex-direction:column;line-height:1}
-    .brand .logo-text{font-weight:900;letter-spacing:.2px;color:#fff;font-size:18px}
-    .brand .tagline{font-size:12px;color:#cbd5e1}
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 20px; border-radius: 8px; border: none; cursor: pointer;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      transition: background .15s, transform .1s; text-decoration: none !important;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; }
+    .btn-blue:hover { background: var(--blue2); transform: translateY(-1px); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border2);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.06); transform: translateY(-1px); color: var(--text); }
+    .btn-lg { padding: 14px 28px; font-size: 16px; border-radius: 10px; }
 
-    nav ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
-    nav a{display:inline-block;padding:9px 13px;border-radius:9px;color:#ffffff;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06)}
-    nav a:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.36)}
-    nav a:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+    /* ── PAGE HERO ── */
+    .page-hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+    .page-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--orange-glow); border: 1px solid rgba(244,104,0,.25);
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; color: var(--accent); margin-bottom: 14px;
+      font-family: "JetBrains Mono", monospace;
+    }
+    .page-hero h1 { font-size: 30px; margin: 0 0 12px; font-weight: 800; letter-spacing: -.5px; color: #fff; }
+    .page-hero p { color: var(--muted); font-size: 15px; line-height: 1.7; margin: 0; max-width: 720px; }
 
-    /* Main */
-    .hero{display:grid;grid-template-columns:1fr 0.8fr;gap:24px;align-items:stretch;padding:28px 0 8px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    h1{margin:0 0 12px;font-size:28px}
-    p.lead{margin:0;color:var(--muted)}
+    /* ── BREADCRUMB ── */
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 20px; padding-top: 20px; }
+    .breadcrumb a { color: var(--muted); }
+    .breadcrumb a:hover { color: var(--accent); text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
 
-    .section{margin-top:22px}
-    .section h2{margin:0 0 10px;font-size:20px}
-    .bullets{margin:0;padding-left:18px}
-    .small{font-size:13px;color:var(--muted)}
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    }
+    .card-accent { border-left: 3px solid var(--accent); }
+    .card-blue { border-left: 3px solid var(--blue); }
+    .card h2 { font-size: 18px; margin: 0 0 12px; font-weight: 700; color: #fff; }
+    .card h3 { font-size: 14px; margin: 16px 0 6px; font-weight: 600; color: var(--text); }
+    .card p { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 0 0 10px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card ul, .card ol { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0; padding-left: 20px; }
+    .card li { margin-bottom: 4px; }
 
-    .cmd{display:flex;align-items:center;gap:8px;margin:8px 0;padding:10px;border-radius:8px;background:#0b1426;border:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;color:#e2e8f0}
-    .copy{margin-left:auto;padding:6px 10px;border-radius:7px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.08);color:#fff;cursor:pointer}
-    .copy:hover{background:rgba(255,255,255,0.18)}
+    /* ── CODE ── */
+    .code-block {
+      background: #0d1017; border: 1px solid var(--border2);
+      border-radius: 8px; padding: 14px 16px; margin: 10px 0;
+      overflow-x: auto;
+    }
+    .code-block code { font-size: 13px; color: #a9d4f5; line-height: 1.7; }
+    .ic { font-family: "JetBrains Mono", monospace; background: rgba(255,255,255,.07); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #a9d4f5; }
 
-    .info{padding:14px;border-radius:10px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);color:#bbf7fe}
-    .warn{padding:14px;border-radius:10px;background:rgba(244,114,182,0.08);border:1px solid rgba(244,114,182,0.25);color:#fbcfe8}
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-num {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      background: var(--orange-glow); border: 1px solid rgba(244,104,0,.3);
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: 700; color: var(--accent);
+      font-family: "JetBrains Mono", monospace;
+    }
+    .step-body h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .step-body p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-    footer{margin:34px 0 20px;color:var(--muted);text-align:center}
+    /* ── TIPS / WARNINGS ── */
+    .tip {
+      background: rgba(108,207,142,.05); border: 1px solid rgba(108,207,142,.2);
+      border-radius: 8px; padding: 12px 14px; margin: 12px 0;
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+    }
+    .tip strong { color: var(--success); }
+    .warn {
+      background: rgba(245,166,35,.05); border: 1px solid rgba(245,166,35,.2);
+      border-radius: 8px; padding: 12px 14px; margin: 12px 0;
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+    }
+    .warn strong { color: var(--warning); }
+    .info-box {
+      background: var(--blue-glow); border: 1px solid rgba(56,113,220,.25);
+      border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .info-box p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    /* Last updated */
-    .last-updated{display:flex;justify-content:flex-end;color:var(--muted);font-size:12px;margin-top:6px}
+    /* ── GRID LAYOUTS ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
+    .feature-item {
+      background: rgba(255,255,255,.02); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px;
+    }
+    .feature-item h4 { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .feature-item p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-    /* Cookie banner */
-    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:#091327;padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.7);display:none;gap:12px;align-items:center;justify-content:space-between;z-index:999}
-    .cookie-actions{display:flex;gap:10px}
+    /* ── COMPARE TABLE ── */
+    .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .comp-table th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); }
+    .comp-table th:not(:first-child) { text-align: center; }
+    .comp-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.03); vertical-align: middle; color: var(--muted); }
+    .comp-table td:first-child { color: var(--text); font-weight: 500; }
+    .comp-table td:not(:first-child) { text-align: center; }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr:hover td { background: rgba(255,255,255,.02); }
+    .comp-table .section-row td { background: rgba(244,104,0,.05); color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 6px 12px; }
+    .yes { color: var(--success); font-size: 15px; }
+    .no  { color: var(--danger);  font-size: 15px; }
+    .partial { color: var(--warning); font-size: 13px; font-weight: 600; }
 
-    /* Responsive */
-    @media (max-width:980px){.hero{grid-template-columns:1fr}}
-    @media (max-width:640px){.header-inner{flex-direction:column;align-items:flex-start;gap:8px}.last-updated{justify-content:flex-start}}
+    /* ── RELATED LINKS ── */
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .related-link {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.025); border: 1px solid var(--border);
+      border-radius: 9px; padding: 12px 14px; color: var(--text); font-size: 13px;
+      transition: background .15s, border-color .15s; text-decoration: none !important;
+    }
+    .related-link:hover { background: var(--orange-glow); border-color: rgba(244,104,0,.25); color: var(--text); }
+    .related-link-icon {
+      width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0;
+      background: var(--orange-glow); border: 1px solid rgba(244,104,0,.2);
+      display: grid; place-items: center; font-size: 14px;
+    }
+
+    /* ── CTA BOX ── */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(244,104,0,.1), rgba(244,104,0,.04));
+      border: 1px solid rgba(244,104,0,.25); border-radius: 14px;
+      padding: 28px; margin-bottom: 20px;
+    }
+    .cta-box h2 { font-size: 18px; margin: 0 0 8px; font-weight: 700; color: #fff; }
+    .cta-box p { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+
+    /* ── FOOTER ── */
+    footer { margin-top: 48px; padding: 28px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; gap: 24px; flex-wrap: wrap; justify-content: space-between; }
+    .footer-col { display: flex; flex-direction: column; gap: 7px; }
+    .footer-col strong { font-size: 12px; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .footer-col a { color: var(--muted); font-size: 13px; }
+    .footer-col a:hover { color: var(--accent); text-decoration: none; }
+    .footer-bottom { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted); }
+
+    /* ── COOKIE ── */
+    .cookie-banner {
+      position: fixed; left: 16px; right: 16px; bottom: 16px;
+      background: var(--card2); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; gap: 16px; align-items: center;
+      box-shadow: 0 12px 40px rgba(0,0,0,.6); z-index: 999;
+    }
+    .cookie-banner p { margin: 0; font-size: 13px; color: var(--muted); flex: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .two-col, .three-col, .feature-grid, .related-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .page-hero h1 { font-size: 22px; }
+    }
   </style>
 </head>
 <body>
-  <div class="site-header">
+  <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="ico-dl" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4 4-4M21 21H3"/></symbol>
+    <symbol id="ico-ext" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6m4-3h6v6m-11 5L21 3"/></symbol>
+    <symbol id="ico-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></symbol>
+    <symbol id="ico-warn" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></symbol>
+    <symbol id="ico-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 8v.01M11 12h1v4h1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ico-arr" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></symbol>
+    <symbol id="ico-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="ico-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" fill="none"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
+  </svg>
+  <header class="site-header">
     <div class="container header-inner">
-      <div class="brand" aria-label="Site brand">
-        <div class="logo-text">Grafana Desktop</div>
-        <div class="tagline">Windows installers & guides — MSI, Service, Promtail</div>
+      <a class="brand" href="index.html">
+        <div class="brand-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M12 2C8.5 2 6 4.5 6 7c0 1.5.6 2.8 1.5 3.8C5.5 12 4 14.2 4 17c0 3.9 3.1 7 7 7h2c3.9 0 7-3.1 7-7 0-2.8-1.5-5-3.5-6.2.9-1 1.5-2.3 1.5-3.8C18 4.5 15.5 2 12 2zm0 2c1.7 0 3 1.3 3 3 0 1-.5 1.9-1.2 2.5-.5-.1-1-.2-1.4-.2-.5 0-1 .1-1.4.2C10.5 8.9 10 8 10 7c0-1.7 1.3-3 3-3zm0 7c3.3 0 6 2.7 6 6s-2.7 6-6 6h-2c-3.3 0-6-2.7-6-6s2.7-6 6-6h2z"/></svg></div>
+        <div>
+          <div class="brand-name">Grafana Desktop</div>
+          <div class="brand-sub">Windows installer &amp; guides</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" >Home</a>
+        <a href="download-msi.html" >Download MSI</a>
+        <a href="install-service.html" class='active'>Install as Service</a>
+        <a href="upgrade-rollback.html" >Upgrade</a>
+        <a href="firewall.html" >Firewall</a>
+        <a href="promtail-windows.html" >Promtail</a>
+        <a href="common-errors.html" >Errors</a>
+        <a href="download-msi.html" class="nav-dl">⬇ Download</a>
       </div>
-      <nav aria-label="Main navigation">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/download-msi.html">Download MSI</a></li>
-          <li><a href="/install-service.html">Install as Service</a></li>
-          <li><a href="/upgrade-rollback.html">Upgrade & Rollback</a></li>
-          <li><a href="/firewall.html">Windows Firewall</a></li>
-          <li><a href="/promtail-windows.html">Promtail</a></li>
-          <li><a href="/common-errors.html">Common Errors</a></li>
-          <li><a href="/privacy.html">Privacy</a></li>
-          <li><a href="/terms.html">Terms</a></li>
-        </ul>
-      </nav>
     </div>
-  </div>
+  </header>
+  <main class="container" style="padding-top:0">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span>Install as Service</div>
+    <section class="page-hero">
+      <div class="page-badge">⚙️ Guide</div>
+      <h1>Install Grafana as a Windows Service</h1>
+      <p>Run Grafana automatically at Windows startup as a managed service. This guide covers the MSI service setup, service account configuration, PowerShell management commands and troubleshooting when the service won't start.</p>
+    </section>
 
-  <div class="container">
-    <div class="last-updated">Last updated: <span id="lastUpdatedText" style="margin-left:6px">2026-04-30</span></div>
-
-    <main class="hero" role="main">
-      <section class="card">
-        <h1>Install Grafana as a Windows Service</h1>
-        <p class="lead">Run Grafana reliably on Windows by installing it as a service. This guide covers startup types, accounts, ports & firewall, logs, and quick fixes.</p>
-
-        <div class="section">
-          <h2>Prerequisites</h2>
-          <ul class="bullets small">
-            <li>Grafana installed via the official <a href="/download-msi.html">Windows x64 MSI</a>.</li>
-            <li>Administrative privileges on the machine.</li>
-            <li>Port 3000 available (or choose a custom port and update firewall rules).</li>
-          </ul>
-        </div>
-
-        <div class="section">
-          <h2>Service setup (GUI)</h2>
-          <ol class="small">
-            <li>Open <em>Services</em> (services.msc) and locate <strong>Grafana</strong>.</li>
-            <li>Open <em>Properties</em> → set <em>Startup type</em> to <strong>Automatic</strong>.</li>
-            <li>Click <strong>Start</strong> to run the service.</li>
-            <li>Verify: open <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a>.</li>
-          </ol>
-        </div>
-
-        <div class="section">
-          <h2>Service control (PowerShell)</h2>
-          <div class="cmd"><code>Get-Service grafana</code><button class="copy" data-cmd="Get-Service grafana">Copy</button></div>
-          <div class="cmd"><code>Start-Service grafana</code><button class="copy" data-cmd="Start-Service grafana">Copy</button></div>
-          <div class="cmd"><code>Stop-Service grafana</code><button class="copy" data-cmd="Stop-Service grafana">Copy</button></div>
-          <div class="cmd"><code>Set-Service -Name grafana -StartupType Automatic</code><button class="copy" data-cmd="Set-Service -Name grafana -StartupType Automatic">Copy</button></div>
-          <div class="small">Use an elevated PowerShell window.</div>
-        </div>
-
-        <div class="section">
-          <h2>Create service manually (if needed)</h2>
-          <p class="small">If the MSI didn't register the service, you can create one manually. Adjust the paths as needed.</p>
-          <div class="cmd"><code>sc.exe create grafana binPath= "C:\\Program Files\\GrafanaLabs\\grafana\\bin\\grafana-server.exe --config C:\\Program Files\\GrafanaLabs\\grafana\\conf\\default.ini" start= auto</code><button class="copy" data-cmd="sc.exe create grafana binPath= &quot;C:\Program Files\GrafanaLabs\grafana\bin\grafana-server.exe --config C:\Program Files\GrafanaLabs\grafana\conf\default.ini&quot; start= auto">Copy</button></div>
-          <div class="cmd"><code>sc.exe start grafana</code><button class="copy" data-cmd="sc.exe start grafana">Copy</button></div>
-          <div class="warn small">Note: Paths may differ depending on your installation folder.</div>
-        </div>
-
-        <div class="section">
-          <h2>Service account & permissions</h2>
-          <ul class="bullets small">
-            <li><strong>Default:</strong> Local System. Simple, but broad rights.</li>
-            <li><strong>Recommended:</strong> a dedicated service account with least privileges needed (read logs, bind to port, read config).</li>
-            <li>If using a custom account, grant <em>Log on as a service</em> and file/port access as required.</li>
-          </ul>
-          <div class="info small">Harden access by restricting Windows Firewall scope to necessary subnets and enabling HTTPS behind a reverse proxy.</div>
-        </div>
-
-        <div class="section">
-          <h2>Ports & Windows Firewall</h2>
-          <ul class="bullets small">
-            <li>Default port: <strong>3000</strong>. Changeable in Grafana config.</li>
-            <li>Create a firewall rule to allow inbound traffic on your chosen port for specific networks.</li>
-          </ul>
-          <div class="small">See <a href="/firewall.html">Windows Firewall guide</a> for step-by-step rules.</div>
-        </div>
-
-        <div class="section">
-          <h2>Logs & data</h2>
-          <ul class="bullets small">
-            <li>Check service status in <em>Event Viewer</em> → Windows Logs → Application/System.</li>
-            <li>Grafana logs and data reside under the Grafana data directory (see your installation config).</li>
-          </ul>
-        </div>
-
-        <div class="section">
-          <h2>Troubleshooting</h2>
-          <ul class="bullets small">
-            <li><strong>Service won't start:</strong> check Event Viewer and Grafana logs; ensure the port isn't in use.</li>
-            <li><strong>Port in use (3000):</strong> find the process using netstat/Resource Monitor, change Grafana port and update firewall rules.</li>
-            <li><strong>Permission issues:</strong> run as admin; if using a custom account, grant necessary rights.</li>
-            <li><strong>After upgrade fails:</strong> stop the service, restore backup, consider previous MSI (see <a href="/upgrade-rollback.html">Upgrade & Rollback</a>).</li>
-          </ul>
-          <div class="small">See also: <a href="/common-errors.html">Common Errors</a>.</div>
-        </div>
-
-      </section>
-
-      <aside class="card" aria-label="Next steps">
-        <div class="section">
-          <h2>Next steps</h2>
-          <ul class="bullets small">
-            <li><a href="/firewall.html">Configure Windows Firewall</a></li>
-            <li><a href="/promtail-windows.html">Add logs with Promtail</a></li>
-            <li><a href="/upgrade-rollback.html">Upgrade & Rollback strategy</a></li>
-            <li><a href="/common-errors.html">Common errors & fixes</a></li>
-          </ul>
-        </div>
-        <div class="section">
-          <a class="btn" href="/download-msi.html">Download MSI</a>
-          <a class="btn secondary" href="/">Back to Home</a>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      <div>© Grafana Desktop — hosted on GitHub Pages • <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> • <a href="/sitemap.xml">Sitemap</a></div>
-    </footer>
-  </div>
-
-  <!-- Cookie banner & consent -->
-  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
-    <div>
-      <strong>Cookies</strong>
-      <div class="small">We use cookies to improve the site and to enable analytics. You can accept or decline analytics cookies.</div>
+    <div class="card">
+      <h2>How the Grafana Windows Service works</h2>
+      <p>The Grafana MSI installer automatically registers a Windows Service named <strong>Grafana</strong>. The service runs the Grafana backend process (<span class="ic">grafana-server.exe</span>) under the LocalSystem account by default. It can be reconfigured to use a dedicated service account for better security isolation.</p>
+      <div class="info-box">
+        <svg width="16" height="16" style="color:var(--blue2);flex-shrink:0;margin-top:1px"><use href="#ico-info"/></svg>
+        <p>The service is created during MSI installation. If you installed Grafana manually (zip), see the manual service registration section below.</p>
+      </div>
     </div>
-    <div class="cookie-actions">
-      <button id="declineCookies" class="btn secondary">Decline</button>
-      <button id="acceptCookies" class="btn">Accept analytics</button>
+
+    <div class="card">
+      <h2>Verify and configure via Services console</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Open Services</h4><p>Press <span class="ic">Win + R</span>, type <span class="ic">services.msc</span>, press Enter. Scroll to find <strong>Grafana</strong> in the list.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Set Startup type to Automatic</h4><p>Double-click the Grafana service → <strong>General tab</strong> → set <em>Startup type</em> to <strong>Automatic</strong> (or <em>Automatic (Delayed Start)</em> if you want it to start after other services). Click Apply.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Start the service</h4><p>Click <strong>Start</strong> in the service properties dialog or right-click the Grafana row and choose Start. Wait a few seconds for it to initialise.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Verify in browser</h4><p>Open <span class="ic">http://localhost:3000</span>. You should see the Grafana login page. Default credentials: <span class="ic">admin / admin</span> — change immediately.</p></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Manage the service with PowerShell</h2>
+      <p>All common service operations can be performed from an elevated PowerShell prompt.</p>
+      <div class="code-block"><code># Check service status
+Get-Service -Name "Grafana"
+
+# Start the service
+Start-Service -Name "Grafana"
+
+# Stop the service
+Stop-Service -Name "Grafana"
+
+# Restart the service
+Restart-Service -Name "Grafana"
+
+# Set to start automatically at boot
+Set-Service -Name "Grafana" -StartupType Automatic
+
+# Disable the service (prevent startup)
+Set-Service -Name "Grafana" -StartupType Disabled</code></div>
+      <div class="tip"><strong>Tip:</strong> Run PowerShell as Administrator for all service management commands. Right-click the PowerShell icon → <em>Run as administrator</em>.</div>
+    </div>
+
+    <div class="card">
+      <h2>Configure a dedicated service account (recommended for production)</h2>
+      <p>Running services as LocalSystem grants broad system access. For production, create a dedicated Windows account with minimal permissions.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Create a local service account</h4>
+        <div class="code-block"><code># Create a new local user for the Grafana service
+$pw = ConvertTo-SecureString "YourStrongPassword!" -AsPlainText -Force
+New-LocalUser -Name "svc-grafana" -Password $pw -Description "Grafana service account" -PasswordNeverExpires $true -UserMayNotChangePassword $true</code></div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Grant access to Grafana data directory</h4>
+        <div class="code-block"><code># Grant the service account full control of the Grafana data path
+$path = "C:\Program Files\GrafanaLabs\grafana\data"
+$acl = Get-Acl $path
+$rule = New-Object System.Security.AccessControl.FileSystemAccessRule("svc-grafana","FullControl","ContainerInherit,ObjectInherit","None","Allow")
+$acl.SetAccessRule($rule)
+Set-Acl $path $acl</code></div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Change service Log On account</h4><p>Open <span class="ic">services.msc</span> → double-click Grafana → <strong>Log On tab</strong> → select <em>This account</em> → enter <span class="ic">.\svc-grafana</span> and the password → Apply → Restart service.</p></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Manual service registration (zip install)</h2>
+      <p>If you installed Grafana from a zip archive rather than the MSI, register the service manually with <span class="ic">grafana-server.exe</span>:</p>
+      <div class="code-block"><code># Run from an elevated prompt in the Grafana bin directory
+# e.g. C:\grafanaingrafana-server.exe --config="..\conf\grafana.ini" --homepath=".." windows-service install
+
+# Then start it
+Start-Service -Name "Grafana"</code></div>
+      <div class="warn"><strong>Note:</strong> Adjust paths to match your actual install location. The <span class="ic">--homepath</span> must point to the directory containing the <span class="ic">conf</span> and <span class="ic">data</span> folders.</div>
+    </div>
+
+    <div class="card">
+      <h2>Troubleshooting: service won't start</h2>
+      <h3>Check Event Viewer</h3>
+      <p>Open <strong>Event Viewer → Windows Logs → Application</strong>. Filter by source <em>Grafana</em>. Error messages here usually indicate the exact cause — port conflict, permission issue or missing config file.</p>
+      <h3>Check Grafana logs directly</h3>
+      <div class="code-block"><code># Default log location
+Get-Content "C:\Program Files\GrafanaLabs\grafana\data\log\grafana.log" -Tail 50</code></div>
+      <h3>Port already in use</h3>
+      <p>If the log shows <span class="ic">listen tcp :3000: bind: Only one usage of each socket address</span>, port 3000 is occupied. Find the process and stop it, or change Grafana's port — see <a href="grafana-port-change.html">Change port guide</a>.</p>
+      <h3>Permission denied on data directory</h3>
+      <p>The service account needs full control of the data directory. Re-run the ACL commands above or check folder permissions in Explorer → Properties → Security.</p>
+      <p>For more issues, see <a href="common-errors.html">Common errors &amp; troubleshooting</a>.</p>
+    </div>
+
+    <div class="cta-box">
+      <h2>Next: configure Grafana</h2>
+      <p>With the service running, configure the port, paths and authentication in grafana.ini, then set up HTTPS for production access.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="grafana-config-ini-windows.html">grafana.ini Guide →</a>
+        <a class="btn btn-outline" href="grafana-https-windows.html">Set up HTTPS</a>
+        <a class="btn btn-outline" href="firewall.html">Firewall Rules</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-col">
+          <strong>Grafana on Windows</strong>
+          <a href="download-msi.html">Download MSI</a>
+          <a href="install-service.html">Install as Service</a>
+          <a href="upgrade-rollback.html">Upgrade &amp; Rollback</a>
+          <a href="grafana-config-ini-windows.html">grafana.ini Config</a>
+          <a href="grafana-uninstall-windows.html">Uninstall</a>
+        </div>
+        <div class="footer-col">
+          <strong>Networking</strong>
+          <a href="firewall.html">Windows Firewall</a>
+          <a href="grafana-https-windows.html">HTTPS / SSL Setup</a>
+          <a href="grafana-nginx-reverse-proxy.html">Nginx Reverse Proxy</a>
+          <a href="grafana-port-change.html">Change Port 3000</a>
+        </div>
+        <div class="footer-col">
+          <strong>Data &amp; Monitoring</strong>
+          <a href="promtail-windows.html">Promtail on Windows</a>
+          <a href="grafana-loki-windows.html">Loki + Grafana</a>
+          <a href="grafana-windows-exporter.html">Windows Exporter</a>
+          <a href="grafana-influxdb-windows.html">InfluxDB on Windows</a>
+          <a href="grafana-datasource-windows.html">Data Sources Guide</a>
+        </div>
+        <div class="footer-col">
+          <strong>More</strong>
+          <a href="common-errors.html">Common Errors</a>
+          <a href="grafana-dashboard-windows.html">Dashboard Guide</a>
+          <a href="grafana-alerts-windows.html">Alerts &amp; Notifications</a>
+          <a href="grafana-ldap-windows.html">LDAP / Active Directory</a>
+          <a href="grafana-backup-windows.html">Backup &amp; Restore</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="yr"></span> Grafana Desktop — community guides for Windows. Not affiliated with Grafana Labs.</span>
+        <span><a href="sitemap.xml">Sitemap</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cookieBanner" class="cookie-banner" style="display:none">
+    <p>We use Google Analytics (GA4) for anonymous traffic analytics. Accept to enable or Decline to opt out.</p>
+    <div style="display:flex;gap:8px;flex-shrink:0">
+      <button id="btnAccept" class="btn btn-primary" style="padding:8px 14px;font-size:13px">Accept</button>
+      <button id="btnDecline" class="btn btn-outline" style="padding:8px 14px;font-size:13px">Decline</button>
     </div>
   </div>
 
   <script>
-    // Last updated
-    (function(){
-      try{
-        var container=document.querySelector('.container');
-        var span=document.createElement('div');
-        span.className='last-updated';
-        span.innerHTML='Last updated: <span id="lastUpdatedText"></span>';
-        container.insertBefore(span, container.children[0]);
-        var out=document.getElementById('lastUpdatedText');
-        var lm=new Date(document.lastModified);
-        if(out && !isNaN(lm.getTime())){
-          var y=lm.getFullYear(); var m=String(lm.getMonth()+1).padStart(2,'0'); var d=String(lm.getDate()).padStart(2,'0');
-          out.textContent=y+'-'+m+'-'+d;
-        }
-      }catch(e){}
-    })();
-
-    // Cookies
-    function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+ (days||365)*24*60*60*1000);document.cookie=name+"="+encodeURIComponent(value)+";path=/;expires="+d.toUTCString();}
-    function getCookie(name){var match=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return match?decodeURIComponent(match[2]):null}
-
-    (function(){
-      var consent=getCookie('gd_cookie_consent');
-      var banner=document.getElementById('cookieBanner');
-      if(!consent){banner.style.display='flex'}
-      document.getElementById('acceptCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','granted',365);banner.style.display='none';loadGtag();});
-      document.getElementById('declineCookies').addEventListener('click',function(){setCookie('gd_cookie_consent','denied',365);banner.style.display='none';});
-      if(consent==='granted'){loadGtag()}
-    })();
-
-    // GA load on consent
-    function loadGtag(){
-      if(window.gtagLoaded) return; window.gtagLoaded=true;
-      var gtagId='G-VJWNBCNN12';
-      var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+gtagId;document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function _gt(){dataLayer.push(arguments)}
-      window.gtag=_gt;
-      gtag('js', new Date());
-      gtag('config', gtagId, { 'anonymize_ip': true });
-    }
-
-    // Copy buttons + GA events
-    function copyText(text){
-      if(navigator.clipboard && navigator.clipboard.writeText){return navigator.clipboard.writeText(text)}
-      var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve();
-    }
-    document.querySelectorAll('.copy').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var cmd=this.getAttribute('data-cmd');
-        copyText(cmd).then(()=>{
-          this.textContent='Copied'; setTimeout(()=>{this.textContent='Copy'},1200);
-          try{ if(window.gtag){ gtag('event','copy_command',{ 'event_category':'install-service','event_label':cmd }); } }catch(e){}
-        });
-      });
-    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    var GA='G-VJWNBCNN12';
+    function loadGA(){if(window._gaL)return;window._gaL=1;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config',GA,{anonymize_ip:true});}
+    var cb=document.getElementById('cookieBanner');
+    var saved=localStorage.getItem('gd_consent');
+    if(saved==='granted'){loadGA();}else if(!saved){cb.style.display='flex';}
+    document.getElementById('btnAccept').onclick=function(){localStorage.setItem('gd_consent','granted');cb.style.display='none';loadGA();};
+    document.getElementById('btnDecline').onclick=function(){localStorage.setItem('gd_consent','denied');cb.style.display='none';};
   </script>
-
-  <!-- Hidden quick links -->
-  <nav aria-label="Quick links" style="display:none">
-    <a href="/download-msi.html">Download MSI</a>
-    <a href="/install-service.html">Install as Service</a>
-    <a href="/upgrade-rollback.html">Upgrade & Rollback</a>
-    <a href="/firewall.html">Configure Windows Firewall</a>
-    <a href="/promtail-windows.html">Promtail on Windows</a>
-    <a href="/common-errors.html">Common Errors</a>
-    <a href="/terms.html">Terms</a>
-    <a href="/privacy.html">Privacy</a>
-  </nav>
 </body>
 </html>
